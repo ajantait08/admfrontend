@@ -17,9 +17,9 @@ import { NotificationContainer } from 'react-notifications';
 import MuiAlert from '@mui/material/Alert';
 import swal from 'sweetalert';
 
-axios.defaults.baseURL = 'http://localhost:8000/';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-axios.defaults.headers.post['Accept'] = 'application/json';
+// axios.defaults.baseURL = 'http://localhost:8000/';
+// axios.defaults.headers.post['Content-Type'] = 'application/json';
+// axios.defaults.headers.post['Accept'] = 'application/json';
 axios.defaults.withCredentials = true;
 
 
@@ -222,42 +222,47 @@ const AuthProvider = ({ children }) => {
 
     axios
       .post(url + 'register_user',
-       params)
-      .then(async response => {
-        console.log(response.data.data.token);
-
-          if(response.data.status === 'error')
-          {
-             setAdmnNoMsg();
-             Callback({'msg':response.data.message,'status':3 });
-          }
-          else if (response.data.status === true) {
-            localStorage.setItem('auth_token',response.data.data.token);
-            localStorage.setItem('auth_email',response.data.data.email);
-            swal({
-              title: "Congratulations !",
-              text: response.data.message,
-              icon: "success",
-              button: "OK",
-            }).then(() => {
-            router.push({
-              pathname: '/pages/auth/login-v1'
-          },'/pages/auth/login-v1')
-        })
-        } else {
-
+       params.datanew,{
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Accept': 'application/json'
         }
-      }).catch(err => {
-        //console.log(err);
-        if (err) Callback({'msg':err , 'status':3})
-        setAdmnNoMsg({
-          data : {
-            data : {
-              date_of_birth : params.datanew.date_of_birth_new,
-              student_name : params.datanew.student_name_new
-            }
-          },
         })
+      .then(async response => {
+        console.log('entered here first');
+        console.log(response);
+
+          // if(response.data.status === 'error')
+          // {
+          //    setAdmnNoMsg();
+          //    Callback({'msg':response.data.message,'status':3 });
+          // }
+          //else if (response.data.status === true) {
+        //     localStorage.setItem('auth_token',response.data.data.token);
+        //     localStorage.setItem('auth_email',response.data.data.email);
+        //     swal({
+        //       title: "Congratulations !",
+        //       text: response.data.message,
+        //       icon: "success",
+        //       button: "OK",
+        //     }).then(() => {
+        //     router.push({
+        //       pathname: '/pages/admission/phd/adm_phd_login'
+        //   },'/pages/admission/phd/adm_phd_login')
+        // })
+        // } else {
+
+        // }
+      }).catch(err => {
+        if (err) Callback({'msg':err , 'status':3})
+        // setAdmnNoMsg({
+        //   data : {
+        //     data : {
+        //       date_of_birth : params.datanew.date_of_birth_new,
+        //       student_name : params.datanew.student_name_new
+        //     }
+        //   },
+        // })
     })
   }
 
@@ -302,7 +307,7 @@ const AuthProvider = ({ children }) => {
     checkLoginAdmnNo : handleCheckLoginAdmnNo
   }
 
-  console.log(values);
+  //console.log(values);
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>
 }
