@@ -39,11 +39,9 @@ const defaultProvider = {
   register: () => Promise.resolve(),
   checkAdmnNo : () => Promise.resolve(),
   registerUser : () => Promise.resolve(),
-  verifyEmail : () => Promise.resolve(),
   checkLoginAdmnNo : () => Promise.resolve(),
   loginUser : () => Promise.resolve(),
-  admnNoMsg: null,
-  //verifyEmailMsg : false
+  admnNoMsg: null
 }
 const url = process.env.APIURL;
 const AuthContext = createContext(defaultProvider)
@@ -57,12 +55,13 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(defaultProvider.loading)
   const [isInitialized, setIsInitialized] = useState(defaultProvider.isInitialized)
   const [admnNoMsg,setAdmnNoMsg] = useState(defaultProvider.admnNoMsg);
-  //const [verifyEmailMsg,setVerifyEmailMsg] = useState(defaultProvider.verifyEmailMsg);
+
   // ** Hooks
   const router = useRouter()
   useEffect(() => {
+    console.log('Entered Here First Of All');
     const initAuth = async (params, errorCallback) => {
-      console.log(verifyEmailMsg);
+      console.log('entered useeffect');
       setIsInitialized(true)
       const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
       console.log('stored token '+storedToken);
@@ -99,7 +98,6 @@ const AuthProvider = ({ children }) => {
               const returnUrl = router.query.returnUrl
               const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
               router.replace(redirectURL)
-
             }
 
           })
@@ -119,6 +117,37 @@ const AuthProvider = ({ children }) => {
       } else {
         console.log('Token store process completed');
         setLoading(false)
+        const returnUrl = router.query.returnUrl
+        const currentUrl = decodeURIComponent(returnUrl)
+        // Split the URL by '/'
+          const urlParts = currentUrl.split('/');
+
+          // Get the last part of the URL
+          const lastPart = urlParts[urlParts.length - 1];
+
+          // Log the extracted value to the console (you can use it as needed)
+          console.log(lastPart);
+
+          // Exclude the last part
+          const urlWithoutLastPart = urlParts.slice(0, -1);
+
+          // Combine the parts back into a URL
+          const combinedUrl = urlWithoutLastPart.join('/');
+
+          // Log the combined URL to the console (you can use it as needed)
+          console.log(combinedUrl);
+          router.push({
+                  pathname: '/pages/admission/phd/verify_email'
+              },'/pages/admission/phd/verify_email')
+        // const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
+        //router.replace(combinedUrl)
+        // localStorage.removeItem('userData')
+        // localStorage.removeItem('userMenu')
+        // localStorage.removeItem('refreshToken')
+        // localStorage.removeItem('accessToken')
+        // setUser(null)
+        // setUserMenu(null)
+        // setLoading(false)
       }
     }
     initAuth()
@@ -268,12 +297,6 @@ const AuthProvider = ({ children }) => {
     })
   }
 
-  const handleVerifyEmail = () => {
-    //setVerifyEmailMsg(true)
-    console.log('reached here 1');
-    Callback({'msg':'Email Verified','status': 1})
-  }
-
   const handleLoginUser = (params, errorCallback) => {
 
     axios
@@ -306,13 +329,11 @@ const AuthProvider = ({ children }) => {
     setIsInitialized,
     setAdmnNoMsg,
     admnNoMsg,
-    //verifyEmailMsg,
     login: handleLogin,
     logout: handleLogout,
     register: handleRegister,
     checkAdmnNo: handleCheckAdmnNo,
     registerUser: handleRegisterUser,
-    //verifyEmail: handleVerifyEmail,
     loginUser: handleLoginUser,
     checkLoginAdmnNo : handleCheckLoginAdmnNo
   }

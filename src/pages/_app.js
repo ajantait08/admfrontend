@@ -36,6 +36,7 @@ import Spinner from 'src/@core/components/spinner'
 
 // ** Contexts
 import { AuthProvider } from 'src/context/AuthContext'
+import { EmailVerifyProvider } from 'src/context/EmailVerifyContext'
 import { SettingsConsumer, SettingsProvider } from 'src/@core/context/settingsContext'
 
 // ** Styled Components
@@ -106,6 +107,7 @@ const App = props => {
           <meta name='viewport' content='initial-scale=1, width=device-width' />
         </Head>
 
+        <EmailVerifyProvider>
         <AuthProvider>
           <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
             <SettingsConsumer>
@@ -129,6 +131,7 @@ const App = props => {
             </SettingsConsumer>
           </SettingsProvider>
         </AuthProvider>
+        </EmailVerifyProvider>
       </CacheProvider>
     </Provider>
   )

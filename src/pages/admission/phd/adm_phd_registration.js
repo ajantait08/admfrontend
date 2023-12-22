@@ -348,8 +348,8 @@ const AdmPhdReg = () => {
       }
       else {
         setErrors({...errors , [prop] : ''})
-        if(values.category != '' && values.colorblindness != '' && values.mobile != '' && values.blood_group != '' && values.email != '' && values.pwd != '' && values.gender != ''){
-          if(errors.middle_name == '' && errors.last_name == '' && errors.category == '' && errors.colorblindness == '' && errors.mobile == '' && errors.father_name == '' && errors.blood_group == '' && errors.email == '' && errors.pwd == '' && errors.gender == ''){
+        if(values.category != '' && values.salutation != '' && values.colorblindness != '' && values.mobile != '' && values.blood_group != '' && values.email != '' && values.pwd != '' && values.gender != ''){
+          if(errors.middle_name == '' && errors.salutation == '' && errors.last_name == '' && errors.category == '' && errors.colorblindness == '' && errors.mobile == '' && errors.father_name == '' && errors.blood_group == '' && errors.email == '' && errors.pwd == '' && errors.gender == ''){
             console.log('No errors are Found')
             setIsButtonDisabled(false)
           }
@@ -367,8 +367,8 @@ const AdmPhdReg = () => {
       }
       else {
         setErrors({...errors , [prop] : ''})
-        if(values.first_name != '' && values.category != '' && values.colorblindness != '' && values.mobile != '' && values.blood_group != '' && values.email != '' && values.pwd != '' && values.gender != ''){
-          if(errors.first_name == '' && errors.last_name == '' && errors.category == '' && errors.colorblindness == '' && errors.mobile == '' && errors.father_name == '' && errors.blood_group == '' && errors.email == '' && errors.pwd == '' && errors.gender == ''){
+        if(values.first_name != '' && values.category != '' && values.salutation != '' && values.colorblindness != '' && values.mobile != '' && values.blood_group != '' && values.email != '' && values.pwd != '' && values.gender != ''){
+          if(errors.first_name == '' && errors.last_name == '' && errors.category == '' && errors.salutation == '' && errors.colorblindness == '' && errors.mobile == '' && errors.father_name == '' && errors.blood_group == '' && errors.email == '' && errors.pwd == '' && errors.gender == ''){
             setIsButtonDisabled(false)
           }
         }
@@ -386,8 +386,8 @@ const AdmPhdReg = () => {
       }
       else {
         setErrors({...errors , [prop] : ''})
-        if(values.first_name != '' && values.category != '' && values.colorblindness != '' && values.mobile != '' && values.blood_group != '' && values.email != '' && values.pwd != '' && values.gender != ''){
-          if(errors.first_name == '' && errors.middle_name == '' && errors.category == '' && errors.colorblindness == '' && errors.mobile == '' && errors.father_name == '' && errors.blood_group == '' && errors.email == '' && errors.pwd == '' && errors.gender == ''){
+        if(values.first_name != '' && values.category != '' && values.colorblindness != '' && values.salutation != '' && values.mobile != '' && values.blood_group != '' && values.email != '' && values.pwd != '' && values.gender != ''){
+          if(errors.first_name == '' && errors.middle_name == '' && errors.category == '' && errors.salutation == '' && errors.colorblindness == '' && errors.mobile == '' && errors.father_name == '' && errors.blood_group == '' && errors.email == '' && errors.pwd == '' && errors.gender == ''){
             setIsButtonDisabled(false)
           }
         }
@@ -405,8 +405,8 @@ const AdmPhdReg = () => {
       }
       else {
         setErrors({...errors , [prop] : ''})
-        if(values.first_name != '' && values.category != '' && values.colorblindness != '' && values.mobile != '' && values.blood_group != '' && values.email != '' && values.pwd != '' && values.gender != ''){
-          if(errors.first_name == '' && errors.middle_name == '' && errors.last_name == '' && errors.category == '' && errors.colorblindness == '' && errors.mobile == '' && errors.blood_group == '' && errors.email == '' && errors.pwd == '' && errors.gender == ''){
+        if(values.first_name != '' && values.category != '' && values.colorblindness != '' && values.salutation != '' && values.mobile != '' && values.blood_group != '' && values.email != '' && values.pwd != '' && values.gender != ''){
+          if(errors.first_name == '' && errors.middle_name == '' && errors.last_name == '' && errors.salutation == '' && errors.category == '' && errors.colorblindness == '' && errors.mobile == '' && errors.blood_group == '' && errors.email == '' && errors.pwd == '' && errors.gender == ''){
             setIsButtonDisabled(false)
           }
         }
@@ -425,8 +425,8 @@ const AdmPhdReg = () => {
       }
       else {
         setErrors({...errors , [prop] : ''})
-        if(values.first_name != '' && values.category != '' && values.colorblindness != '' && values.mobile != '' && values.blood_group != '' && values.pwd != '' && values.gender != ''){
-          if(errors.first_name == '' && errors.middle_name == '' && errors.last_name == '' && errors.category == '' && errors.colorblindness == '' && errors.mobile == '' && errors.father_name == '' && errors.blood_group == '' && errors.email == '' && errors.pwd == '' && errors.gender == ''){
+        if(values.first_name != '' && values.category != '' && values.colorblindness != '' && values.salutation != '' && values.mobile != '' && values.blood_group != '' && values.pwd != '' && values.gender != ''){
+          if(errors.first_name == '' && errors.middle_name == '' && errors.last_name == '' && errors.salutation == '' && errors.category == '' && errors.colorblindness == '' && errors.mobile == '' && errors.father_name == '' && errors.blood_group == '' && errors.email == '' && errors.pwd == '' && errors.gender == ''){
             setIsButtonDisabled(false)
           }
         }
@@ -444,8 +444,8 @@ const AdmPhdReg = () => {
       }
       else {
         setErrors({...errors , [prop] : ''})
-        if(values.first_name != '' && values.category != '' && values.colorblindness != '' && values.mobile != '' && values.blood_group != '' && values.email != '' && values.pwd != '' && values.gender != ''){
-          if(errors.first_name == '' && errors.middle_name == '' && errors.last_name == '' && errors.category == '' && errors.colorblindness == '' && errors.mobile == '' && errors.father_name == '' && errors.blood_group == '' && errors.email == '' && errors.pwd == '' && errors.gender == ''){
+        if(values.first_name != '' && values.category != '' && values.colorblindness != '' && values.salutation != '' && values.mobile != '' && values.blood_group != '' && values.email != '' && values.pwd != '' && values.gender != ''){
+          if(errors.first_name == '' && errors.middle_name == '' && errors.last_name == '' && errors.salutation == '' && errors.category == '' && errors.colorblindness == '' && errors.mobile == '' && errors.father_name == '' && errors.blood_group == '' && errors.email == '' && errors.pwd == '' && errors.gender == ''){
             setIsButtonDisabled(false)
           }
         }
@@ -455,6 +455,21 @@ const AdmPhdReg = () => {
     if(prop === 'category'){
       if(event.target.value === ''){
         setErrors({...errors , [prop] : 'Selection of Category is required'})
+        setIsButtonDisabled(true)
+      }
+      else {
+        setErrors({...errors , [prop] : ''})
+        if(values.first_name != '' && values.colorblindness != '' && values.mobile != '' && values.blood_group != '' && values.salutation != '' && values.email != '' && values.pwd != '' && values.gender != ''){
+          if(errors.first_name == '' && errors.middle_name == '' && errors.last_name == '' && errors.colorblindness == '' && errors.salutation == '' &&  errors.mobile == '' && errors.father_name == '' && errors.blood_group == '' && errors.email == '' && errors.pwd == '' && errors.gender == ''){
+            setIsButtonDisabled(false)
+          }
+        }
+      }
+    }
+
+    if(prop === 'salutation'){
+      if(event.target.value === ''){
+        setErrors({...errors , [prop] : 'Selection of Salutation is required'})
         setIsButtonDisabled(true)
       }
       else {
@@ -474,8 +489,8 @@ const AdmPhdReg = () => {
       }
       else {
         setErrors({...errors , [prop] : ''})
-        if(values.first_name != '' && values.category != '' && values.colorblindness != '' && values.mobile != '' && values.blood_group != '' && values.email != '' && values.gender != ''){
-          if(errors.first_name == '' && errors.middle_name == '' && errors.last_name == '' && errors.category == '' && errors.colorblindness == '' && errors.mobile == '' && errors.father_name == '' && errors.blood_group == '' && errors.email == '' && errors.gender == ''){
+        if(values.first_name != '' && values.category != '' && values.colorblindness != '' && values.mobile != '' && values.blood_group != '' && values.salutation != '' && values.email != '' && values.gender != ''){
+          if(errors.first_name == '' && errors.middle_name == '' && errors.last_name == '' && errors.category == '' && errors.colorblindness == '' && errors.salutation == '' && errors.mobile == '' && errors.father_name == '' && errors.blood_group == '' && errors.email == '' && errors.gender == ''){
             setIsButtonDisabled(false)
           }
         }
@@ -489,8 +504,8 @@ const AdmPhdReg = () => {
       }
       else {
         setErrors({...errors , [prop] : ''})
-        if(values.first_name != '' && values.category != '' && values.colorblindness != '' && values.mobile != '' && values.blood_group != '' && values.email != '' && values.pwd != '' ){
-          if(errors.first_name == '' && errors.middle_name == '' && errors.last_name == '' && errors.category == '' && errors.colorblindness == '' && errors.mobile == '' && errors.father_name == '' && errors.blood_group == '' && errors.email == '' && errors.pwd == ''){
+        if(values.first_name != '' && values.category != '' && values.colorblindness != '' && values.mobile != '' && values.blood_group != '' && values.salutation != '' && values.email != '' && values.pwd != '' ){
+          if(errors.first_name == '' && errors.middle_name == '' && errors.last_name == '' && errors.category == '' && errors.colorblindness == '' && errors.mobile == '' && errors.salutation == '' && errors.father_name == '' && errors.blood_group == '' && errors.email == '' && errors.pwd == ''){
             setIsButtonDisabled(false)
           }
         }
@@ -504,8 +519,8 @@ const AdmPhdReg = () => {
       }
       else {
         setErrors({...errors , [prop] : ''})
-        if(values.first_name != '' && values.category != '' && values.colorblindness != '' && values.mobile != '' && values.email != '' && values.pwd != '' && values.gender != ''){
-          if(errors.first_name == '' && errors.middle_name == '' && errors.last_name == '' && errors.category == '' && errors.colorblindness == '' && errors.mobile == '' && errors.father_name == '' && errors.email == '' && errors.pwd == '' && errors.gender == ''){
+        if(values.first_name != '' && values.category != '' && values.colorblindness != '' && values.mobile != '' && values.email != '' && values.pwd != '' && values.salutation != '' && values.gender != ''){
+          if(errors.first_name == '' && errors.middle_name == '' && errors.last_name == '' && errors.category == '' && errors.colorblindness == '' && errors.salutation == '' && errors.mobile == '' && errors.father_name == '' && errors.email == '' && errors.pwd == '' && errors.gender == ''){
             setIsButtonDisabled(false)
           }
         }
@@ -519,8 +534,8 @@ const AdmPhdReg = () => {
       }
       else {
         setErrors({...errors , [prop] : ''})
-        if(values.first_name != '' && values.category != '' && values.mobile != '' && values.blood_group != '' && values.email != '' && values.pwd != '' && values.gender != ''){
-          if(errors.first_name == '' && errors.middle_name == '' && errors.last_name == '' && errors.category == '' && errors.mobile == '' && errors.father_name == '' && errors.blood_group == '' && errors.email == '' && errors.pwd == '' && errors.gender == ''){
+        if(values.first_name != '' && values.category != '' && values.mobile != '' && values.blood_group != '' && values.email != '' && values.pwd != '' && values.salutation != '' && values.gender != ''){
+          if(errors.first_name == '' && errors.middle_name == '' && errors.last_name == '' && errors.category == '' && errors.mobile == '' && errors.father_name == '' && errors.salutation == '' && errors.blood_group == '' && errors.email == '' && errors.pwd == '' && errors.gender == ''){
             setIsButtonDisabled(false)
           }
         }
@@ -557,6 +572,7 @@ const AdmPhdReg = () => {
   const submitHandler = (event) => {
 
     event.preventDefault();
+    var salutation = values.salutation;
     var firstname = values.first_name;
     var middlename = values.middle_name;
     var lastname = values.last_name;
@@ -571,6 +587,7 @@ const AdmPhdReg = () => {
     var colorblindness = values.colorblindness;
 
     var datanew  = {
+     salutation : salutation,
      firstname : firstname,
      middlename : middlename,
      lastname : lastname,
@@ -661,7 +678,7 @@ const AdmPhdReg = () => {
             <Grid item xs={12} md={6} sx={{ alignSelf: 'flex-start' }}>
 
             <FormControl fullWidth sx={{ mb: 4 }}>
-                    <InputLabel htmlFor='grouped-native-select'><Icon icon='mdi:trophy-award' style={{ width: '20px', height: '20px' }} />&nbsp;Divyang (PwD)<span style={{ color : 'red'}}>*</span></InputLabel>
+                    <InputLabel htmlFor='grouped-native-select'><Icon icon='mdi:account-box' style={{ width: '20px', height: '20px' }} />&nbsp;Salutation<span style={{ color : 'red'}}>*</span></InputLabel>
                     <Select label='Grouping More More' value={values.salutation} name='salutation' onChange={handleChangeFormData('salutation')} id='grouped-native-select pwd'>
                     <MenuItem value=''>
                         <em> -- Please Select --</em>
@@ -785,7 +802,25 @@ const AdmPhdReg = () => {
                 {/* {errorList.first_name && <FormHelperText sx={{ color: 'error.main' }}>{errorList.first_name[0]}</FormHelperText>} */}
               </FormControl>
 
-
+              <FormControl fullWidth sx={{ mb: 4 }}>
+              <TextField
+                fullWidth
+                label=<Typography>Last Name<span style={{ color : 'red'}}>*</span></Typography>
+                name='last_name'
+                placeholder='Enter Last Name'
+                value={values.last_name}
+                onChange={handleChangeFormData('last_name')}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <Icon icon='mdi:account-outline' style={{ width: '20px', height: '20px' }} />
+                    </InputAdornment>
+                  )
+                }}
+              />
+                {errors.last_name && <FormHelperText sx={{ color: 'error.main' }}>{errors.last_name}</FormHelperText>}
+                {/* {errorList.first_name && <FormHelperText sx={{ color: 'error.main' }}>{errorList.first_name[0]}</FormHelperText>} */}
+              </FormControl>
 
               <FormControl fullWidth sx={{ mb: 4 }}>
                     <InputLabel htmlFor='grouped-native-select'><Icon icon='mdi:shape-plus' style={{ width: '20px', height: '20px' }} />&nbsp;Category<span style={{ color : 'red'}}>*</span></InputLabel>
@@ -852,8 +887,8 @@ const AdmPhdReg = () => {
                       } else {
                       setBasicPicker(newValue)
                       setErrors({...errors , dob : ''})
-                      if(values.first_name != '' && values.middle_name != '' && values.last_name != '' && values.category != '' && values.mobile != '' && values.father_name != '' && values.blood_group != '' && values.email != '' && values.pwd != '' && values.gender != ''){
-                        if(errors.first_name == '' && errors.middle_name == '' && errors.last_name == '' && errors.category == '' && errors.mobile == '' && errors.father_name == '' && errors.blood_group == '' && errors.email == '' && errors.pwd == '' && errors.gender == ''){
+                      if(values.first_name != '' && values.middle_name != '' && values.last_name != '' && values.category != '' && values.mobile != '' && values.salutation != '' && values.father_name != '' && values.blood_group != '' && values.email != '' && values.pwd != '' && values.gender != ''){
+                        if(errors.first_name == '' && errors.middle_name == '' && errors.last_name == '' && errors.category == '' && errors.mobile == '' && errors.salutation == '' && errors.father_name == '' && errors.blood_group == '' && errors.email == '' && errors.pwd == '' && errors.gender == ''){
                           setIsButtonDisabled(false)
                         }
                       }
