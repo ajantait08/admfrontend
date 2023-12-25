@@ -1,8 +1,10 @@
 // ** React Imports
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useEffect, useState , useContext } from 'react'
 
 // ** Next Import
 import { useRouter } from 'next/router'
+
+import { EmailVerifyContext } from './EmailVerifyContext'
 
 // ** Axios
 import axios from 'axios'
@@ -16,11 +18,12 @@ import { NotificationManager } from 'react-notifications';
 import { NotificationContainer } from 'react-notifications';
 import MuiAlert from '@mui/material/Alert';
 import swal from 'sweetalert';
+//import { useEmailVerify } from 'src/hooks/useEmailVerify';
 
 // axios.defaults.baseURL = 'http://localhost:8000/';
 // axios.defaults.headers.post['Content-Type'] = 'application/json';
 // axios.defaults.headers.post['Accept'] = 'application/json';
-axios.defaults.withCredentials = true;
+//axios.defaults.withCredentials = true;
 
 
 // ** Defaults
@@ -48,8 +51,6 @@ const defaultProvider = {
 const url = process.env.APIURL;
 const AuthContext = createContext(defaultProvider)
 
-//const cryptr = new Cryptr(process.env.CSecretKey);
-
 const AuthProvider = ({ children }) => {
   // ** States
   const [user, setUser] = useState(defaultProvider.user)
@@ -62,7 +63,6 @@ const AuthProvider = ({ children }) => {
   const router = useRouter()
   useEffect(() => {
     const initAuth = async (params, errorCallback) => {
-      console.log(verifyEmailMsg);
       setIsInitialized(true)
       const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
       console.log('stored token '+storedToken);
@@ -107,7 +107,7 @@ const AuthProvider = ({ children }) => {
             NotificationManager.error("error", 'Error');
             const returnUrl = router.query.returnUrl
             const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
-            router.replace(redirectURL)
+            //router.replace(redirectURL)
             localStorage.removeItem('userData')
             localStorage.removeItem('userMenu')
             localStorage.removeItem('refreshToken')

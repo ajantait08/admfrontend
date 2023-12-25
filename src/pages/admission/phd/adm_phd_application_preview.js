@@ -183,43 +183,6 @@ const MenuProps = {
   }
 }
 
-const category = [
-  'General',
-  'SC',
-  'ST',
-  'OBC',
-  'EWS'
-]
-
-const pwd = [
-    'Yes',
-    'No'
-]
-
-const gender = [
-    'Male',
-    'Female',
-    'Transgender'
-]
-
-const blood_group = [
-   'A+',
-   'A-',
-   'B+',
-   'B-',
-   'O+',
-   'O-',
-   'AB+',
-   'AB-'
-]
-
-const salutation = [
-   'Mr.',
-   'Mrs.',
-   'Miss',
-   'Prof.',
-   'Dr.'
-]
 
 const url = process.env.APIURL;
 //axios.defaults.withCredentials = true;
@@ -238,7 +201,7 @@ const CustomInput = forwardRef((props, ref) => {
 })
 
 
-const VerifyEmail = () => {
+const AdmPhdLogin = () => {
 
   // ** Hooks
   const auth = useAuth()
@@ -317,7 +280,7 @@ const VerifyEmail = () => {
   )
 }
 
-VerifyEmail.guestGuard = true
-VerifyEmail.getlayout = page => <UserLayout>{page}</UserLayout>
+AdmPhdLogin.guestGuard = true
+AdmPhdLogin.getlayout = page => <UserLayout>{page}</UserLayout>
 
-export default VerifyEmail
+export default AdmPhdLogin

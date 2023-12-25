@@ -19,8 +19,9 @@ import swal from 'sweetalert';
 
 // axios.defaults.baseURL = 'http://localhost:8000/';
 // axios.defaults.headers.post['Content-Type'] = 'application/json';
-// axios.defaults.headers.post['Accept'] = 'application/json';
-axios.defaults.withCredentials = true;
+//axios.defaults.headers.post['Accept'] = 'application/json';
+axios.defaults.withCredentials = false;
+
 // ** Defaults
 
 const defaultProvider = {
@@ -40,24 +41,33 @@ const EmailVerifyProvider = ({ children }) => {
   const [user, setUser] = useState(defaultProvider.user)
   const [isInitialized, setIsInitialized] = useState(defaultProvider.isInitialized)
   const [verifyEmailMsg,setVerifyEmailMsg] = useState(defaultProvider.verifyEmailMsg);
+
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
   // ** Hooks
   const router = useRouter()
   useEffect(() => {
-    const initAuth = async (params, errorCallback) => {
-      setVerifyEmailMsg(true)
-      setIsInitialized(true)
+    const initAuths = async (params, errorCallback) => {
+      setVerifyEmailMsg('Coding is Love')
+      console.log(window.location.origin)
+      const returnUrl = router.query.returnUrl
+      const currentUrl = decodeURIComponent(returnUrl)
+      const urlParts = currentUrl.split('/');  // Split the URL by '/'
+      const lastPart = urlParts[urlParts.length - 1]; // Get the last part of the URL
+      const datanew = {email : lastPart}
+      if(isValidEmail(lastPart)){
+        router.replace("http://localhost:3000/admission/phd/verify_email");
     }
-    initAuth()
+    }
+    initAuths()
   }, [router])
 
   const values = {
     user,
     isInitialized,
     setIsInitialized,
-    verifyEmailMsg,
-    verifyEmail: handleVerifyEmail,
-    loginUser: handleLoginUser,
-    checkLoginAdmnNo : handleCheckLoginAdmnNo
+    verifyEmailMsg
   }
 
   //console.log(values);

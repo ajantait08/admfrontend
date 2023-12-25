@@ -183,43 +183,6 @@ const MenuProps = {
   }
 }
 
-const category = [
-  'General',
-  'SC',
-  'ST',
-  'OBC',
-  'EWS'
-]
-
-const pwd = [
-    'Yes',
-    'No'
-]
-
-const gender = [
-    'Male',
-    'Female',
-    'Transgender'
-]
-
-const blood_group = [
-   'A+',
-   'A-',
-   'B+',
-   'B-',
-   'O+',
-   'O-',
-   'AB+',
-   'AB-'
-]
-
-const salutation = [
-   'Mr.',
-   'Mrs.',
-   'Miss',
-   'Prof.',
-   'Dr.'
-]
 
 const url = process.env.APIURL;
 //axios.defaults.withCredentials = true;
@@ -238,7 +201,7 @@ const CustomInput = forwardRef((props, ref) => {
 })
 
 
-const VerifyEmail = () => {
+const AdmPhdApplyProgram = () => {
 
   // ** Hooks
   const auth = useAuth()
@@ -247,29 +210,8 @@ const VerifyEmail = () => {
   const { settings } = useSettings()
   const hidden = useMediaQuery(theme.breakpoints.down('md'))
 
-  useEffect(() => {
-    const emailVerify = async (params, errorCallback) => {
-  axios
-  .post(url + 'verify_email',
-  'ajanta.ghosh08@gmail.com',{
-  headers: {
-    'Accept': 'application/json'
-  }})
-  .then(async response => {
-    console.log('entered here email verify');
-    console.log(response);
-    }).catch(err => {
-    //if (err) Callback({'msg':err , 'status':3})
-    })
-  }
-  emailVerify()
-},[]);
-
-
-
 
   return (
-    <DatePickerWrapper>
     <Box className='content-center'>
     <Grid container spacing={4} >
     <Grid item xs={12} md={2} sx={{ alignSelf: 'flex-start' }}>
@@ -313,11 +255,10 @@ const VerifyEmail = () => {
     </Grid>
     <FooterIllustrationsV1 />
   </Box>
-  </DatePickerWrapper>
   )
 }
 
-VerifyEmail.guestGuard = true
-VerifyEmail.getlayout = page => <UserLayout>{page}</UserLayout>
+AdmPhdApplyProgram.guestGuard = true
+AdmPhdApplyProgram.getlayout = page => <UserLayout>{page}</UserLayout>
 
-export default VerifyEmail
+export default AdmPhdApplyProgram

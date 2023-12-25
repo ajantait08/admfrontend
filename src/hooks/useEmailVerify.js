@@ -1,4 +1,4 @@
 import { useContext } from 'react'
-import { AuthContext } from 'src/context/Context'
+import { EmailVerifyContext } from 'src/context/EmailVerifyContext'
 
-export const useAuth = () => useContext(AuthContext)
+export const useEmailVerify = () => useContext(EmailVerifyContext)

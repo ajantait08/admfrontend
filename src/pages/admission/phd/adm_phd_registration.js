@@ -60,6 +60,7 @@ import {yupResolver} from '@hookform/resolvers/yup'
 
 // ** Hooks
 import { useAuth } from 'src/hooks/useAuth'
+import { useEmailVerify } from 'src/hooks/useEmailVerify'
 import useBgColor from 'src/@core/hooks/useBgColor'
 import { useSettings } from 'src/@core/hooks/useSettings'
 
@@ -237,7 +238,7 @@ const CustomInput = forwardRef((props, ref) => {
 
 const AdmPhdReg = () => {
 
-  // console.log(apiData);
+
   // ** States
   const [values, setValues] = useState({
       salutation : '',
@@ -275,6 +276,7 @@ const AdmPhdReg = () => {
 
   // ** Hooks
   const auth = useAuth()
+  const EmailVerify = useEmailVerify()
   const theme = useTheme()
   const bgClasses = useBgColor()
   const { settings } = useSettings()
@@ -297,6 +299,8 @@ const AdmPhdReg = () => {
     admn_no : '',
     recaptcha_token : false
     }
+
+    console.log(EmailVerify.verifyEmailMsg);
 
   const isAlphanumeric = (str) => {
       return /^[a-zA-Z0-9./]+$/.test(str);
