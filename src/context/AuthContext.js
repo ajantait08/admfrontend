@@ -4,7 +4,7 @@ import { createContext, useEffect, useState , useContext } from 'react'
 // ** Next Import
 import { useRouter } from 'next/router'
 
-import { EmailVerifyContext } from './EmailVerifyContext'
+import { EmailVerifyContext } from './ProgramDetailsContext'
 
 // ** Axios
 import axios from 'axios'

@@ -49,7 +49,7 @@ const EmailVerifyProvider = ({ children }) => {
   const router = useRouter()
   useEffect(() => {
     const initAuths = async (params, errorCallback) => {
-      setVerifyEmailMsg('Coding is Love')
+      //setVerifyEmailMsg('Coding is Love')
       console.log(window.location.origin)
       const returnUrl = router.query.returnUrl
       const currentUrl = decodeURIComponent(returnUrl)

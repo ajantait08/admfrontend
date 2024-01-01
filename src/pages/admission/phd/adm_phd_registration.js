@@ -116,7 +116,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
-  [theme.breakpoints.up('sm')]: { width: '34rem' }
+  //[theme.breakpoints.up('sm')]: { width: '34rem' }
 }))
 
 const LinkStyled = styled('a')(({ theme }) => ({
@@ -638,21 +638,21 @@ const AdmPhdReg = () => {
     <DatePickerWrapper>
     <Box className='content-center'>
     <Grid container spacing={4} >
-    <Grid item xs={12} md={2} sx={{ alignSelf: 'flex-start' }}>
+    <Grid item xs={12} md={2}>
     </Grid>
-    <Grid item xs={12} md={10} sx={{ alignSelf: 'flex-start' }}>
-        <Card sx={{ width: '800px !important' , backgroundColor: `${theme.palette.common.phd_admission_dark}`}} >
+    <Grid item xs={12} md={6}>
+        <Card sx={{ backgroundColor: `${theme.palette.common.phd_admission_dark}`}} >
         <CardContent sx={{ p: theme => `${theme.spacing(12, 9, 7)} !important` }}>
             <Box sx={{ mb: 8, alignItems: 'center', justifyContent: 'center' }}>
-    <Card sx={{ width: '750px !important'}}>
+    <Card>
       <CardContent sx={{ p: theme => `${theme.spacing(12, 9, 7)} !important` }}>
         <Box sx={{ mb: 8 }}>
-        <Card sx={{ backgroundColor: `${theme.palette.common.phd_admission}` , width: '700px !important', overflow: 'visible', position: 'relative' }}>
+        <Card sx={{ backgroundColor: `${theme.palette.common.phd_admission}` ,overflow: 'visible', position: 'relative' }}>
       <CardContent>
         <Typography variant='h5' sx={{ mb: 6.5, fontWeight: 600 }}>
          Welcome to {themeConfig.templateName} !
         </Typography>
-        <Box sx={{ mb: 1.5, rowGap: 1, width: '65%', display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+        <Box sx={{ mb: 1.5, rowGap: 1, display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start' }}>
           <Typography variant='h5' sx={{ mr: 1.5 }}>
             Registration Form &nbsp;&nbsp;
             <IconButton
@@ -666,24 +666,29 @@ const AdmPhdReg = () => {
 
         </Box>
 
-        <Box sx={{ mb: 1.5, rowGap: 1, width: '65%', display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start' }}>
-          <Typography variant='small' sx={{ mr: 1.5 , color : '#6F0E11;' }}>
+        <Box sx={{ mb: 1.5, rowGap: 1, display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+        <Grid container spacing={4} >
+        <Grid item xs={12} md={6}>
+        <Typography variant='small' sx={{ mr: 1.5 , color : '#6F0E11;' }}>
             Please Fill All Details Carefully !
           </Typography>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Img src="/images/pages/create-deal-review-complete.png" alt="Ratings"/>
+          </Grid>
+          </Grid>
         </Box>
-
-        <Img src="/images/pages/create-deal-review-complete.png" alt="Ratings"/>
       </CardContent>
     </Card>
         </Box>
 
         <form noValidate autoComplete='off' onSubmit={submitHandler}>
         <Grid container spacing={2}>
-            <Grid item xs={12} md={6} sx={{ alignSelf: 'flex-start' }}>
+            <Grid item xs={12} md={6}>
 
             <FormControl fullWidth sx={{ mb: 4 }}>
                     <InputLabel htmlFor='grouped-native-select'><Icon icon='mdi:account-box' style={{ width: '20px', height: '20px' }} />&nbsp;Salutation<span style={{ color : 'red'}}>*</span></InputLabel>
-                    <Select label='Grouping More More' value={values.salutation} name='salutation' onChange={handleChangeFormData('salutation')} id='grouped-native-select pwd'>
+                    <Select label='Grouping More More' value={values.salutation} name='salutation' onChange={handleChangeFormData('salutation')} onBlur={handleChangeFormData('salutation')} id='grouped-native-select pwd'>
                     <MenuItem value=''>
                         <em> -- Please Select --</em>
                     </MenuItem>
@@ -713,7 +718,6 @@ const AdmPhdReg = () => {
                 {errors.middle_name && <FormHelperText sx={{ color: 'error.main' }}>{errors.middle_name}</FormHelperText>}
                 {/* {errorList.last_name && <FormHelperText sx={{ color: 'error.main' }}>{errorList.last_name[0]}</FormHelperText>} */}
               </FormControl>
-
 
 
               <FormControl fullWidth sx={{ mb: 4 }}>

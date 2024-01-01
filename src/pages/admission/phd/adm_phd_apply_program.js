@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography'
 import InputLabel from '@mui/material/InputLabel'
 import IconButton from '@mui/material/IconButton'
 import CardContent from '@mui/material/CardContent'
+import CardHeader from '@mui/material/CardHeader'
 import FormControl from '@mui/material/FormControl'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import { styled, useTheme } from '@mui/material/styles'
@@ -32,6 +33,7 @@ import UserLayout from 'src/layouts/UserLayout'
 import Icon from 'src/@core/components/icon'
 import BlankLayout from 'src/@core/layouts/BlankLayout'
 import BlankLayoutWithAppBar from 'src/@core/layouts/BlankLayoutWithAppBar'
+import Avatar from '@mui/material/Avatar'
 import CardStatisticsCharacters from 'src/views/ui/cards/statistics/CardStatisticsCharacters'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import FormHelperText from '@mui/material/FormHelperText'
@@ -115,7 +117,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
-  [theme.breakpoints.up('sm')]: { width: '34rem' }
+  //[theme.breakpoints.up('md')]: { width: '34rem' }
 }))
 
 const LinkStyled = styled('a')(({ theme }) => ({
@@ -201,6 +203,18 @@ const CustomInput = forwardRef((props, ref) => {
 })
 
 
+const blood_group = [
+  'A+',
+  'A-',
+  'B+',
+  'B-',
+  'O+',
+  'O-',
+  'AB+',
+  'AB-'
+]
+
+
 const AdmPhdApplyProgram = () => {
 
   // ** Hooks
@@ -210,47 +224,256 @@ const AdmPhdApplyProgram = () => {
   const { settings } = useSettings()
   const hidden = useMediaQuery(theme.breakpoints.down('md'))
 
+  const [values, setValues] = useState({
+    salutation : '',
+    first_name : '',
+    middle_name : '',
+    last_name : '',
+    category : '',
+    colorblindness : '',
+    mobile : '',
+    father_name : '',
+    blood_group : '',
+    email : '',
+    pwd : '',
+    gender : '',
+    dob : ''
+})
+
+  const [errors , setErrors] = useState({
+    salutation : '',
+    first_name : '',
+    middle_name : '',
+    last_name : '',
+    category: '',
+    colorblindness : '',
+    mobile:'',
+    father_name : '',
+    blood_group : '',
+    email : '',
+    pwd : '',
+    gender : '',
+    dob : ''
+  })
+
 
   return (
     <Box className='content-center'>
     <Grid container spacing={4} >
-    <Grid item xs={12} md={2} sx={{ alignSelf: 'flex-start' }}>
+    <Grid item xs={12} md={2}>
+    dfdsfskf
     </Grid>
-    <Grid item xs={12} md={10} sx={{ alignSelf: 'flex-start' }}>
-        <Card sx={{ width: '800px !important' , backgroundColor: `${theme.palette.common.phd_admission_dark}`}} >
-        <CardContent sx={{ p: theme => `${theme.spacing(12, 9, 7)} !important` }}>
+    <Grid item xs={12} md={8} sx={{ borderColor:`${theme.palette.error.main}`,backgroundColor: `${theme.palette.common.phd_admission}` , overflow: 'visible', position: 'relative' , paddingRight: '16px'}}>
+
             <Box sx={{ mb: 8, alignItems: 'center', justifyContent: 'center' }}>
-    <Card sx={{ width: '750px !important'}}>
+    <Card>
       <CardContent sx={{ p: theme => `${theme.spacing(12, 9, 7)} !important` }}>
         <Box sx={{ mb: 8 }}>
-        <Card sx={{ backgroundColor: `${theme.palette.common.phd_admission}` , width: '700px !important', overflow: 'visible', position: 'relative' }}>
-      <CardContent>
-        <Typography variant='h5' sx={{ mb: 6.5, fontWeight: 600 }}>
-         Welcome to {themeConfig.templateName} !
-        </Typography>
-        <Box sx={{ mb: 1.5, rowGap: 1, width: '65%', display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start' }}>
-          <Typography variant='h5' sx={{ mr: 1.5 }}>
-            Registration Form &nbsp;&nbsp;
-            <IconButton
-                            edge='start'
-                            onMouseDown={e => e.preventDefault()}
-                          >
-                            <Icon icon='mdi:file-document-edit' fontSize={20} />
-                          </IconButton>
+        <Card sx={{ borderLeft : '2px solid green'}}>
+      <CardContent sx={{ p: theme => `${theme.spacing(12, 9, 7)} !important` }}>
+      <Grid container spacing={4}>
+      <Grid item xs={12} md={3}>
+      <FormControl fullWidth sx={{ mb: 4 }}>
+                    <InputLabel htmlFor='grouped-native-select' sx={{ backgroundColor : '#fff'}}><Icon icon='mdi:book-education' style={{ width: '20px', height: '20px' }} />&nbsp;Programme applying For<span style={{ color : 'red'}}>*</span></InputLabel>
+                    <Select label='Grouping More More' value={values.blood_group} name='prog_apply' id='grouped-native-select prog_apply'>
+                    <MenuItem value=''>
+                        <em> -- Please Select --</em>
+                    </MenuItem>
+                    { blood_group.map(value => (
+                    <MenuItem value={value}>{value}</MenuItem>
+                    ))}
+                    </Select>
+                    {/* <FormHelperText>With label + helper text</FormHelperText> */}
+                    {errors.blood_group && <FormHelperText sx={{ color: 'error.main' }}>{errors.blood_group}</FormHelperText>}
+                </FormControl>
+      </Grid>
+      <Grid item xs={12} md={3}>
+      <FormControl fullWidth sx={{ mb: 4 }}>
+                    <InputLabel htmlFor='grouped-native-select'><Icon icon='la:school' style={{ width: '20px', height: '20px' }} />&nbsp;Department<span style={{ color : 'red'}}>*</span></InputLabel>
+                    <Select label='Grouping More More' value={values.blood_group} name='blood_group' id='grouped-native-select blood_group'>
+                    <MenuItem value=''>
+                        <em> -- Please Select --</em>
+                    </MenuItem>
+                    { blood_group.map(value => (
+                    <MenuItem value={value}>{value}</MenuItem>
+                    ))}
+                    </Select>
+                    {/* <FormHelperText>With label + helper text</FormHelperText> */}
+                    {errors.blood_group && <FormHelperText sx={{ color: 'error.main' }}>{errors.blood_group}</FormHelperText>}
+                </FormControl>
+      </Grid>
+      <Grid item xs={12} md={3}>
+      <FormControl fullWidth sx={{ mb: 4 }}>
+                    <InputLabel htmlFor='grouped-native-select'><Icon icon='mdi:education-outline' style={{ width: '20px', height: '20px' }} />&nbsp;Ph.D. in<span style={{ color : 'red'}}>*</span></InputLabel>
+                    <Select label='Grouping More More' value={values.blood_group} name='phd_in' id='grouped-native-select phd_in'>
+                    <MenuItem value=''>
+                        <em> -- Please Select --</em>
+                    </MenuItem>
+                    { blood_group.map(value => (
+                    <MenuItem value={value}>{value}</MenuItem>
+                    ))}
+                    </Select>
+                    {/* <FormHelperText>With label + helper text</FormHelperText> */}
+                    {errors.blood_group && <FormHelperText sx={{ color: 'error.main' }}>{errors.blood_group}</FormHelperText>}
+                </FormControl>
+      </Grid>
+      <Grid item xs={12} md={3}>
+      <FormControl fullWidth sx={{ mb: 4 }}>
+                    <InputLabel htmlFor='grouped-native-select'><Icon icon='arcticons:ctrl-c-programming-idle-game' style={{ width: '20px', height: '20px' }} />&nbsp;Programme Elibility<span style={{ color : 'red'}}>*</span></InputLabel>
+                    <Select label='Grouping More More' value={values.prog_eligibility} name='blood_group' id='grouped-native-select prog_eligibility'>
+                    <MenuItem value=''>
+                        <em> -- Please Select --</em>
+                    </MenuItem>
+                    { blood_group.map(value => (
+                    <MenuItem value={value}>{value}</MenuItem>
+                    ))}
+                    </Select>
+                    {/* <FormHelperText>With label + helper text</FormHelperText> */}
+                    {errors.blood_group && <FormHelperText sx={{ color: 'error.main' }}>{errors.blood_group}</FormHelperText>}
+                </FormControl>
+            </Grid>
+            </Grid>
+            </CardContent>
+          </Card>
+              </Box>
+        </CardContent>
+          </Card>
+          </Box>
 
-          </Typography>
+          <Box sx={{ mb: 8, alignItems: 'center', justifyContent: 'center' }}>
+      <Card>
+      <CardContent sx={{ p: theme => `${theme.spacing(12, 9, 7)} !important` }}>
+        <Box sx={{ mb: 8 }}>
+        <Card sx={{ borderLeft : '2px solid green'}}>
+      <CardContent sx={{ p: theme => `${theme.spacing(12, 9, 7)} !important` }}>
+      <Grid container spacing={4}>
+      <Grid item xs={12} md={3}>
 
-        </Box>
+      <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' , backgroundColor: '#e0f9e1' , border: theme => `1px solid ${theme.palette.primary.main}` }}>
+            <Avatar
+              variant='rounded'
+              sx={{
+                mr: 3,
+                width: '2.625rem',
+                height: '2.625rem',
+                backgroundColor: 'transparent',
+              }}
+            >
+              <img width={23} height={20} alt='briefcase' src='/images/cards/user.png' />
+            </Avatar>
+            <Typography variant='body2' sx={{ color:'text.secondary' , fontWeight:'bold'}}>Propose Your Supervisor&nbsp;<span style={{ color : 'red'}}>*</span> :</Typography>
+          </Box>
+      </Grid>
+      <Grid item xs={12} md={3}>
+      <FormControl fullWidth sx={{ mb: 4 }}>
+                    <InputLabel htmlFor='grouped-native-select'><Icon icon='material-symbols-light:priority-outline' style={{ width: '20px', height: '20px' }} />&nbsp;Priority 1<span style={{ color : 'red'}}>*</span></InputLabel>
+                    <Select label='Grouping More More' value={values.blood_group} name='blood_group' id='grouped-native-select blood_group'>
+                    <MenuItem value=''>
+                        <em> -- Please Select --</em>
+                    </MenuItem>
+                    { blood_group.map(value => (
+                    <MenuItem value={value}>{value}</MenuItem>
+                    ))}
+                    </Select>
+                    {/* <FormHelperText>With label + helper text</FormHelperText> */}
+                    {errors.blood_group && <FormHelperText sx={{ color: 'error.main' }}>{errors.blood_group}</FormHelperText>}
+                </FormControl>
+      </Grid>
+      <Grid item xs={12} md={3}>
+      <FormControl fullWidth sx={{ mb: 4 }}>
+                    <InputLabel htmlFor='grouped-native-select'><Icon icon='material-symbols-light:priority-outline' style={{ width: '20px', height: '20px' }} />&nbsp;Priority 2</InputLabel>
+                    <Select label='Grouping More More' value={values.blood_group} name='phd_in' id='grouped-native-select phd_in'>
+                    <MenuItem value=''>
+                        <em> -- Please Select --</em>
+                    </MenuItem>
+                    { blood_group.map(value => (
+                    <MenuItem value={value}>{value}</MenuItem>
+                    ))}
+                    </Select>
+                    {/* <FormHelperText>With label + helper text</FormHelperText> */}
+                    {errors.blood_group && <FormHelperText sx={{ color: 'error.main' }}>{errors.blood_group}</FormHelperText>}
+                </FormControl>
+      </Grid>
+      <Grid item xs={12} md={3}>
+      <FormControl fullWidth sx={{ mb: 4 }}>
+                    <InputLabel htmlFor='grouped-native-select'><Icon icon='material-symbols-light:priority-outline' style={{ width: '20px', height: '20px' }} />&nbsp;Priority 3</InputLabel>
+                    <Select label='Grouping More More' value={values.prog_eligibility} name='blood_group' id='grouped-native-select prog_eligibility'>
+                    <MenuItem value=''>
+                        <em> -- Please Select --</em>
+                    </MenuItem>
+                    { blood_group.map(value => (
+                    <MenuItem value={value}>{value}</MenuItem>
+                    ))}
+                    </Select>
+                    {/* <FormHelperText>With label + helper text</FormHelperText> */}
+                    {errors.blood_group && <FormHelperText sx={{ color: 'error.main' }}>{errors.blood_group}</FormHelperText>}
+                </FormControl>
+            </Grid>
+            </Grid>
+            <Grid container spacing={4}>
+      <Grid item xs={12} md={3}>
+      </Grid>
+      <Grid item xs={12} md={3}>
+      <FormControl fullWidth sx={{ mb: 4 }}>
+                    <InputLabel htmlFor='grouped-native-select'><Icon icon='material-symbols-light:priority-outline' style={{ width: '20px', height: '20px' }} />&nbsp;Priority 4</InputLabel>
+                    <Select label='Grouping More More' value={values.blood_group} name='blood_group' id='grouped-native-select blood_group'>
+                    <MenuItem value=''>
+                        <em> -- Please Select --</em>
+                    </MenuItem>
+                    { blood_group.map(value => (
+                    <MenuItem value={value}>{value}</MenuItem>
+                    ))}
+                    </Select>
+                    {/* <FormHelperText>With label + helper text</FormHelperText> */}
+                    {errors.blood_group && <FormHelperText sx={{ color: 'error.main' }}>{errors.blood_group}</FormHelperText>}
+                </FormControl>
+      </Grid>
+      <Grid item xs={12} md={3}>
+      <FormControl fullWidth sx={{ mb: 4 }}>
+                    <InputLabel htmlFor='grouped-native-select'><Icon icon='material-symbols-light:priority-outline' style={{ width: '20px', height: '20px' }} />&nbsp;Priority 5</InputLabel>
+                    <Select label='Grouping More More' value={values.blood_group} name='phd_in' id='grouped-native-select phd_in'>
+                    <MenuItem value=''>
+                        <em> -- Please Select --</em>
+                    </MenuItem>
+                    { blood_group.map(value => (
+                    <MenuItem value={value}>{value}</MenuItem>
+                    ))}
+                    </Select>
+                    {/* <FormHelperText>With label + helper text</FormHelperText> */}
+                    {errors.blood_group && <FormHelperText sx={{ color: 'error.main' }}>{errors.blood_group}</FormHelperText>}
+                </FormControl>
+      </Grid>
+      <Grid item xs={12} md={3}>
+      <FormControl fullWidth sx={{ mb: 4 }}>
+                    <InputLabel htmlFor='grouped-native-select'><Icon icon='material-symbols-light:priority-outline' style={{ width: '20px', height: '20px' }} />&nbsp;Priority 6</InputLabel>
+                    <Select label='Grouping More More' value={values.prog_eligibility} name='blood_group' id='grouped-native-select prog_eligibility'>
+                    <MenuItem value=''>
+                        <em> -- Please Select --</em>
+                    </MenuItem>
+                    { blood_group.map(value => (
+                    <MenuItem value={value}>{value}</MenuItem>
+                    ))}
+                    </Select>
+                    {/* <FormHelperText>With label + helper text</FormHelperText> */}
+                    {errors.blood_group && <FormHelperText sx={{ color: 'error.main' }}>{errors.blood_group}</FormHelperText>}
+                </FormControl>
+            </Grid>
+            </Grid>
+            </CardContent>
+          </Card>
+              </Box>
+        </CardContent>
+          </Card>
+          </Box>
+          <div style={{ display: 'flex', justifyContent: 'right' }}>
+          <ButtonNew size='large' type='submit' variant='contained' sx={{ mb: 7}}>
+            Add Program
+          </ButtonNew>
+          </div>
+          </Grid>
 
-        <Img src="/images/pages/create-deal-review-complete.png" alt="Ratings"/>
-      </CardContent>
-    </Card>
-        </Box>
-      </CardContent>
-    </Card>
-    </Box>
-</CardContent>
-    </Card>
+    <Grid item xs={12} md={2}>
+    dfdsfskf
     </Grid>
     </Grid>
     <FooterIllustrationsV1 />
