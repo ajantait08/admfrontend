@@ -234,12 +234,11 @@ const AuthProvider = ({ children }) => {
         console.log('entered here first');
         console.log(response);
 
-          // if(response.data.status === 'error')
-          // {
-          //    setAdmnNoMsg();
-          //    Callback({'msg':response.data.message,'status':3 });
-          // }
-          //else if (response.data.status === true) {
+          if(response.data.status === false)
+          {
+             Callback({'msg':response.data.message,'status':3 });
+          }
+          else if (response.data.status === true) {
         //     localStorage.setItem('auth_token',response.data.data.token);
         //     localStorage.setItem('auth_email',response.data.data.email);
         //     swal({
@@ -252,9 +251,9 @@ const AuthProvider = ({ children }) => {
         //       pathname: '/pages/admission/phd/adm_phd_login'
         //   },'/pages/admission/phd/adm_phd_login')
         // })
-        // } else {
+        } else {
 
-        // }
+        }
       }).catch(err => {
         if (err) Callback({'msg':err , 'status':3})
         // setAdmnNoMsg({

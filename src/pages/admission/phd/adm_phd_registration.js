@@ -608,7 +608,7 @@ const AdmPhdReg = () => {
 
     auth.registerUser({ datanew }, (response) => {
 
-     //console.log(response)
+     console.log(response)
      //if(response.status === 3)
      //{
      // if(response.msg.response.data.message.firstname != '')

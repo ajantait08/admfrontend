@@ -94,7 +94,7 @@ const data = [
   }
 ]
 
-const StepBillingDetails = ({ handlePrev }) => {
+const StepBillingDetails = ({ handlePrev , handleNext }) => {
   const initialSelected = data.filter(item => item.isSelected)[data.filter(item => item.isSelected).length - 1].value
 
   // ** State
@@ -214,9 +214,12 @@ const StepBillingDetails = ({ handlePrev }) => {
             >
               Previous
             </Button>
-            <Button color='success' variant='contained' onClick={() => alert('Submitted..!!')}>
-              Submit
+            <Button variant='contained' onClick={handleNext} endIcon={<Icon icon='mdi:chevron-right' fontSize={20} />}>
+              Next
             </Button>
+            {/* <Button color='success' variant='contained' onClick={() => alert('Submitted..!!')}>
+              Submit
+            </Button> */}
           </Box>
         </Grid>
       </Grid>

@@ -51,6 +51,12 @@ import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContentText from '@mui/material/DialogContentText'
+import Table from '@mui/material/Table'
+import TableHead from '@mui/material/TableHead'
+import TableBody from '@mui/material/TableBody'
+import TableContainer from '@mui/material/TableContainer'
+import TableRow from '@mui/material/TableRow'
+import TableCell, { tableCellClasses } from '@mui/material/TableCell'
 
 //import FormControlLabel from '@mui/material/FormControlLabel'
 
@@ -158,6 +164,57 @@ const TabList = styled(MuiTabList)(({ theme }) => ({
 
   }))
 
+  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      color: theme.palette.common.white,
+      //backgroundColor: theme.palette.common.black
+      backgroundColor: theme.palette.common.phd_admission_dark
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14
+    }
+  }))
+
+  // const customtypographyu = styled(u)(({ theme }) => ({
+  //   boldUnderline: {
+  //     fontWeight: 'bold',
+  //     textDecoration: 'underline',
+  //   },
+  // }))
+
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover
+    },
+
+    // hide last border
+    '&:last-of-type td, &:last-of-type th': {
+      border: 0
+    }
+  }))
+
+  const StyledBox = styled(Box)(({ theme }) => ({
+    padding: 15,
+    backgroundColor: '#d9edf7',
+    borderRadius: 5,
+    borderColor: '#bce8f1',
+    mb: 4 ,
+    display: 'flex',
+    justifyContent: 'center'
+  }))
+
+  const createData = (name, calories, fat, carbs, protein) => {
+    return { name, calories, fat, carbs, protein }
+  }
+
+  const rows = [
+    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+    // createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+    // createData('Eclair', 262, 16.0, 24, 6.0),
+    // createData('Cupcake', 305, 3.7, 67, 4.3),
+    // createData('Gingerbread', 356, 16.0, 49, 3.9)
+  ]
+
 
 const Img = styled('img')({
     right: 7,
@@ -201,6 +258,12 @@ const CustomInput = forwardRef((props, ref) => {
    label=<Typography>Birth Date&nbsp;<span style={{ color : 'red'}}>*</span></Typography>
    autoComplete='off' />
 })
+
+const StyledCardHeader = styled(CardHeader)(({theme}) => ({
+  textAlign: 'center',
+  backgroundColor: 'cadetblue',
+  fontWeight: 'bold'
+ }))
 
 
 const blood_group = [
@@ -265,9 +328,10 @@ const AdmPhdApplyProgram = () => {
     </Grid>
     <Grid item xs={12} md={8} sx={{ borderColor:`${theme.palette.error.main}`,backgroundColor: `${theme.palette.common.phd_admission}` , overflow: 'visible', position: 'relative' , paddingRight: '16px'}}>
 
-            <Box sx={{ mb: 8, alignItems: 'center', justifyContent: 'center' }}>
     <Card>
+    <StyledCardHeader title="Please Select Program and Supervisor details" />
       <CardContent sx={{ p: theme => `${theme.spacing(12, 9, 7)} !important` }}>
+            <Box sx={{ mb: 8, alignItems: 'center', justifyContent: 'center' }}>
         <Box sx={{ mb: 8 }}>
         <Card sx={{ borderLeft : '2px solid green'}}>
       <CardContent sx={{ p: theme => `${theme.spacing(12, 9, 7)} !important` }}>
@@ -336,20 +400,16 @@ const AdmPhdApplyProgram = () => {
             </CardContent>
           </Card>
               </Box>
-        </CardContent>
-          </Card>
           </Box>
 
           <Box sx={{ mb: 8, alignItems: 'center', justifyContent: 'center' }}>
-      <Card>
-      <CardContent sx={{ p: theme => `${theme.spacing(12, 9, 7)} !important` }}>
         <Box sx={{ mb: 8 }}>
         <Card sx={{ borderLeft : '2px solid green'}}>
       <CardContent sx={{ p: theme => `${theme.spacing(12, 9, 7)} !important` }}>
       <Grid container spacing={4}>
       <Grid item xs={12} md={3}>
 
-      <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' , backgroundColor: '#e0f9e1' , border: theme => `1px solid ${theme.palette.primary.main}` }}>
+      <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' , backgroundColor: '#e9f0ea' , border: theme => `1px solid ${theme.palette.primary.main}` }}>
             <Avatar
               variant='rounded'
               sx={{
@@ -462,14 +522,86 @@ const AdmPhdApplyProgram = () => {
             </CardContent>
           </Card>
               </Box>
-        </CardContent>
-          </Card>
           </Box>
+
           <div style={{ display: 'flex', justifyContent: 'right' }}>
           <ButtonNew size='large' type='submit' variant='contained' sx={{ mb: 7}}>
             Add Program
           </ButtonNew>
           </div>
+
+          </CardContent>
+          </Card>
+
+          <br />
+          <br />
+
+          <div style={{ display: 'none'}}>
+
+          <Grid item xs={12}>
+              <Box sx={{ mb: 4 , display: 'flex', justifyContent: 'center' }}>
+              <Typography variant='h6' sx={{ color: `${theme.palette.common.phd_admission_dark}` , fontWeight: 800}}><u>Programme you wish to apply for</u></Typography>
+              {/* <Typography sx={{ color: 'text.secondary' }}>Enter Your Personal Information</Typography> */}
+              </Box>
+              </Grid>
+
+              <Grid item xs={12}>
+              <Box sx={{ mb: 4 , display: 'flex', justifyContent: 'center' }}>
+              <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 700 }} aria-label='customized table'>
+        <TableHead>
+          <TableRow>
+            <StyledTableCell>SL.No</StyledTableCell>
+            <StyledTableCell align='right'>Programme Applying</StyledTableCell>
+            <StyledTableCell align='right'>Qualifying Degree</StyledTableCell>
+            <StyledTableCell align='right'>Ph.D. In</StyledTableCell>
+            <StyledTableCell align='right'>Amount (Rs.)</StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map(row => (
+            <StyledTableRow key={row.name}>
+              <StyledTableCell component='th' scope='row'>
+                {row.name}
+              </StyledTableCell>
+              <StyledTableCell align='right'>{row.calories}</StyledTableCell>
+              <StyledTableCell align='right'>{row.fat}</StyledTableCell>
+              <StyledTableCell align='right'>{row.carbs}</StyledTableCell>
+              <StyledTableCell align='right'>{row.protein}</StyledTableCell>
+            </StyledTableRow>
+          ))}
+        </TableBody>
+      </Table>
+      </TableContainer>
+      </Box>
+      </Grid>
+
+              <Grid item xs={12}>
+              <StyledBox>
+              <Typography variant='h6' sx={{ color: `${theme.palette.common.phd_admission_dark}` , fontWeight: 800}}><u>Applicantion fee for each programme for UR/OBC/EWS candidate is Rs. 1000/- and for SC/ST/PwD/Female/Transgender candidate is Rs. 500/- .</u></Typography>
+              {/* <Typography sx={{ color: 'text.secondary' }}>Enter Your Personal Information</Typography> */}
+              </StyledBox>
+              </Grid>
+
+              <br />
+
+              <Grid item xs={12}>
+              <StyledBox sx={{ color: '#a94442',backgroundColor: '#e6e2e2',borderColor: '#ebccd1'}}>
+              <Typography variant='h6' sx={{ color: `${theme.palette.common.phd_admission_dark}` , fontWeight: 800}}><u>Disclaimer: Once you click on "Final programme selection SUBMIT", you cannot change the programme later. </u></Typography>
+              {/* <Typography sx={{ color: 'text.secondary' }}>Enter Your Personal Information</Typography> */}
+              </StyledBox>
+              </Grid>
+
+              <br />
+
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <ButtonNew size='large' type='submit' variant='contained' sx={{ mb: 7}}>
+          Final programme selection SUBMIT
+          </ButtonNew>
+          </div>
+
+          </div>
+
           </Grid>
 
     <Grid item xs={12} md={2}>

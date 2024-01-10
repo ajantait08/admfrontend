@@ -49,10 +49,17 @@ const ContentWrapper = styled('main')(({ theme }) => ({
   width: '100%',
   padding: theme.spacing(6),
   transition: 'padding .25s ease-in-out',
+  backgroundSize: 'cover',
+  backgroundImage: 'url(/images/pages/tiles-shapes-2617112_960_720.jpg)',
+  backgroundRepeat: 'no-repeat',
+  backgroundPosition: 'center',
+  justifyContent: 'center',
+  alignItems: 'center',
   [theme.breakpoints.down('sm')]: {
     paddingLeft: theme.spacing(4),
     paddingRight: theme.spacing(4)
   }
+
 }))
 
 const HorizontalLayout = props => {

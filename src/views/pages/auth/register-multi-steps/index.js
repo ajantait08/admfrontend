@@ -8,7 +8,7 @@ import StepLabel from '@mui/material/StepLabel'
 import Typography from '@mui/material/Typography'
 
 // ** Step Components
-import StepPersonalInfo from 'src/views/pages/auth/register-multi-steps/StepPersonalInfo'
+import StepPersonalInfo from 'src/views/pages/auth/register-multi-steps/PersonalDetails'
 import StepAccountDetails from 'src/views/pages/auth/register-multi-steps/StepAccountDetails'
 import StepBillingDetails from 'src/views/pages/auth/register-multi-steps/StepBillingDetails'
 

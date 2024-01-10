@@ -120,7 +120,8 @@ import StepLabel from '@mui/material/StepLabel'
 //import Typography from '@mui/material/Typography'
 
 // ** Step Components
-import StepPersonalInfo from 'src/views/pages/auth/register-multi-steps/StepPersonalInfo'
+import PersonalDetails from 'src/views/pages/auth/register-multi-steps/PersonalDetails'
+import EducationDetails from 'src/views/pages/auth/register-multi-steps/EducationDetails'
 import StepAccountDetails from 'src/views/pages/auth/register-multi-steps/StepAccountDetails'
 import StepBillingDetails from 'src/views/pages/auth/register-multi-steps/StepBillingDetails'
 
@@ -132,17 +133,25 @@ import StepperWrapper from 'src/@core/styles/mui/stepper'
 
 const steps = [
   {
-    title: 'Account',
-    subtitle: 'Account Details'
+    title: 'Personal Details',
+    subtitle: 'PD'
   },
   {
-    title: 'Personal',
-    subtitle: 'Enter Information'
+    title: 'Qualification',
+    subtitle: 'QN'
   },
   {
-    title: 'Billing',
-    subtitle: 'Payment Details'
-  }
+    title: 'Work Experience',
+    subtitle: 'WE'
+  },
+  {
+    title: 'Document Upload',
+    subtitle: 'DU'
+  },
+  {
+    title: 'Payment',
+    subtitle: 'PT'
+  },
 ]
 
 
@@ -182,11 +191,15 @@ const TabList = styled(MuiTabList)(({ theme }) => ({
 }))
 
   const ButtonNew = styled(Button)(({theme}) => ({
-
         '& .MuiButton-root' : {
         backgroundColor: `${theme.palette.common.phd_admission_dark} !important`
     }
+  }))
 
+  const StyledCardHeader = styled(CardHeader)(({theme}) => ({
+   textAlign: 'center',
+   backgroundColor: 'cadetblue',
+   fontWeight: 'bold'
   }))
 
 
@@ -303,11 +316,15 @@ const AdmPhdApplyProgram = () => {
   const getStepContent = step => {
     switch (step) {
       case 0:
-        return <StepAccountDetails handleNext={handleNext} />
+        return <PersonalDetails handleNext={handleNext} theme={theme} />
       case 1:
-        return <StepPersonalInfo handleNext={handleNext} handlePrev={handlePrev} />
+        return <EducationDetails handleNext={handleNext} handlePrev={handlePrev} />
       case 2:
-        return <StepBillingDetails handlePrev={handlePrev} />
+        return <StepBillingDetails handleNext={handleNext} handlePrev={handlePrev} />
+      case 3:
+        return <StepBillingDetails handleNext={handleNext} handlePrev={handlePrev} />
+      case 4:
+        return <StepBillingDetails handleNext={handleNext} handlePrev={handlePrev} />
       default:
         return null
     }
@@ -317,7 +334,6 @@ const AdmPhdApplyProgram = () => {
     return getStepContent(activeStep)
   }
 
-
   return (
     <Box className='content-center'>
     <Grid container spacing={4} >
@@ -326,6 +342,7 @@ const AdmPhdApplyProgram = () => {
     </Grid>
     <Grid item xs={12} md={8} sx={{ borderColor:`${theme.palette.error.main}`,backgroundColor: `${theme.palette.common.phd_admission}` , overflow: 'visible', position: 'relative' , paddingRight: '16px'}}>
     <Card>
+    <StyledCardHeader title="Please fill up your application details" />
       <CardContent sx={{ p: theme => `${theme.spacing(12, 9, 7)} !important` }}>
         <Box sx={{ mb: 8 }}>
 
