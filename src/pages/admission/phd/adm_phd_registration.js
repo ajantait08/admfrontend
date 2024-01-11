@@ -365,11 +365,11 @@ const AdmPhdReg = () => {
       //   setErrors({...errors , [prop] : 'Middle Name is Required'})
       //   setIsButtonDisabled(true)
       // }
-      if(!isAlphanumeric_middle_last(event.target.value)){
-        setErrors({...errors , [prop] : 'Middle Name Should Only be Alphanumeric'})
-        setIsButtonDisabled(true)
-      }
-      else {
+        if(!isAlphanumeric_middle_last(event.target.value)){
+          setErrors({...errors , [prop] : 'Middle Name Should Only be Alphanumeric'})
+          setIsButtonDisabled(true)
+        }
+        else{
         setErrors({...errors , [prop] : ''})
         if(values.first_name != '' && values.category != '' && values.salutation != '' && values.colorblindness != '' && values.mobile != '' && values.blood_group != '' && values.email != '' && values.pwd != '' && values.gender != ''){
           if(errors.first_name == '' && errors.last_name == '' && errors.category == '' && errors.salutation == '' && errors.colorblindness == '' && errors.mobile == '' && errors.father_name == '' && errors.blood_group == '' && errors.email == '' && errors.pwd == '' && errors.gender == ''){
@@ -577,58 +577,53 @@ const AdmPhdReg = () => {
 
     event.preventDefault();
     var salutation = values.salutation;
-    var firstname = values.first_name;
-    var middlename = values.middle_name;
-    var lastname = values.last_name;
+    var first_name = values.first_name;
+    var middle_name = values.middle_name;
+    var last_name = values.last_name;
     var pwd = values.pwd;
     var category = values.category;
     var email = values.email;
     var mobile = values.mobile;
     var gender = values.gender;
     const formattedDate = format(basicPicker, "dd-MM-yyyy");
-    var fathername = values.father_name;
-    var bloodgroup = values.blood_group;
+    var father_name = values.father_name;
+    var blood_group = values.blood_group;
     var colorblindness = values.colorblindness;
 
     var datanew  = {
      salutation : salutation,
-     firstname : firstname,
-     middlename : middlename,
-     lastname : lastname,
+     first_name : first_name,
+     middle_name : middle_name,
+     last_name : last_name,
      pwd : pwd,
      category : category,
      email : email,
      mobile : mobile,
      gender : gender,
      dob : formattedDate,
-     fathername : fathername,
-     bloodgroup : bloodgroup,
+     father_name : father_name,
+     blood_group : blood_group,
      colorblindness : colorblindness
     }
 
     auth.registerUser({ datanew }, (response) => {
 
-     console.log(response)
-     //if(response.status === 3)
-     //{
-     // if(response.msg.response.data.message.firstname != '')
-     // {
-     //   setErrors({...errors , ['first_name'] : response.msg.response.data.message.firstname})
-     //   setIsButtonDisabled(true)
-     // }
-     // else{
-     //   setErrors({...errors , ['first_name'] : ''})
-     //   setIsButtonDisabled(false)
-     // }
-     // }
-
-     // else {
-     //   console.log('working fine')
-     // }
-
+     if(response.status === 3)
+     {
+     if(response.msg.message === 'validation error')
+     {
+        const errorFields = Object.keys(response.msg.errors);
+        errorFields.map(fieldName => {
+        setErrors(errors => ({
+          ...errors,
+          [fieldName]: response.msg.errors[fieldName],
+        }));
+        });
+        setIsButtonDisabled(true)
+     }
+     }
     })
-
-  }
+    }
 
   const handleClickColorBlindData = (event) => {
      console.log(event.target.value)

@@ -236,7 +236,7 @@ const AuthProvider = ({ children }) => {
 
           if(response.data.status === false)
           {
-             Callback({'msg':response.data.message,'status':3 });
+             Callback({'msg':response.data,'status':3 });
           }
           else if (response.data.status === true) {
         //     localStorage.setItem('auth_token',response.data.data.token);
