@@ -556,7 +556,7 @@ const AdmPhdReg = () => {
 
   const [open, setOpen] = useState(false)
   const handleClickOpen = (event) => {
-    if(event.target.value === 'yes'){
+    if(event.target.value === 'Y'){
     setOpen(true)
     }
     else{
@@ -722,7 +722,7 @@ const AdmPhdReg = () => {
                         <em> -- Please Select --</em>
                     </MenuItem>
                     { pwd.map(value => (
-                    <MenuItem value={value}>{value}</MenuItem>
+                    <MenuItem value={value === 'Yes' ? 'Y' : 'N'}>{value}</MenuItem>
                     ))}
                     </Select>
                     {errors.pwd && <FormHelperText sx={{ color: 'error.main' }}>{errors.pwd}</FormHelperText>}
@@ -920,8 +920,8 @@ const AdmPhdReg = () => {
              <FormControl sx={{ mb:4, flexWrap: 'wrap', flexDirection: 'row' }}>
              <FormLabel component='legend' sx={{ margin: '16px 0px 0px 8px !important' }} >Do you have Color Blindness/Uniocularity? <span style={{ color : 'red'}}>*</span> &nbsp; &nbsp;</FormLabel>
               <RadioGroup row value={values.colorblindness} name='colorblindness' id='colorblindness' onClick={handleClickOpen} onChange={handleChangeFormData('colorblindness')} aria-label='colorblindness'>
-                <FormControlLabel value='yes' control={<Radio />} label='Yes' />
-                <FormControlLabel value='no' control={<Radio />} label='No' />
+                <FormControlLabel value='Y' control={<Radio />} label='Yes' />
+                <FormControlLabel value='N' control={<Radio />} label='No' />
               </RadioGroup>
           </FormControl>
           <Dialog
