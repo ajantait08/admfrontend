@@ -703,17 +703,18 @@ const AdmPhdReg = () => {
       <Typography variant='h5' sx={{ color: `${theme.palette.common.phd_admission_dark}` , fontWeight: 800 , textAlign:'center'}}><u>Congratulations!!</u></Typography>
 
       <Typography variant='div' sx={{ color: `${theme.palette.common.phd_admission_dark}` , fontWeight: 800}}>
-      <Typography variant='h6' sx={{ color: `${theme.palette.common.phd_admission_dark}` , fontWeight: 800 , padding: theme.spacing(5)}}>You are successfully registered. Please confirm the email
+      <Typography variant='h6' sx={{ color: `${theme.palette.common.phd_admission_dark}` , fontWeight: 800 , padding: theme.spacing(3)}}>You are successfully registered. Please confirm the email
                                                             sent to your email-id!
+                                                            <Typography variant='small' sx={{ color: '#7b6767' , fontWeight: 800 , padding: theme.spacing(2) , fontSize: 18}}>(This is the most important step to proceed.)</Typography>
      </Typography>
-     <Typography variant='h6' sx={{ color: `${theme.palette.common.phd_admission_dark}` , fontWeight: 800 , padding: theme.spacing(5)}}>Your registration number is {reg_no}.
+     <Typography variant='h6' sx={{ color: `${theme.palette.common.phd_admission_dark}` , fontWeight: 800 , padding: theme.spacing(3)}}>Your registration number is {reg_no}.
                                                             Please save it for future use.</Typography>
                                                             </Typography>
 
-    <Typography variant='h6' sx={{ color: '#7b6767' , fontWeight: 800 , padding: theme.spacing(5)}}>NOTE : Please Remember , this is a Flash Message. Please Donot Refresh untill you have finished reading completely.</Typography>
+    <Typography variant='h6' sx={{ color: '#7b6767' , fontWeight: 800 , padding: theme.spacing(3)}}>NOTE : Please Remember , this is a Flash Message. Please Donot Refresh untill you have finished reading completely.</Typography>
               {/* <Typography sx={{ color: 'text.secondary' }}>Enter Your Personal Information</Typography> */}
-        <div style={{ display: 'flex', justifyContent: 'right' }}>
-          <ButtonNew size='large' onclick={handleButtonClick} type='submit' variant='contained' sx={{ mb: 7}}>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <ButtonNew size='large' onclick={handleButtonClick} type='submit' variant='contained' sx={{ mb: 5}}>
             GO BACK TO HOMEPAGE
           </ButtonNew>
         </div>
