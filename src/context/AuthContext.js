@@ -239,21 +239,11 @@ const AuthProvider = ({ children }) => {
              Callback({'msg':response.data,'status':3 });
           }
           else if (response.data.status === true) {
-            console.log('Token'+response.data.token);
             localStorage.setItem('auth_token',response.data.token);
-            swal({
-              title: "Congratulations !",
-              text: response.data.message,
-              icon: "success",
-              button: "OK",
-            }).then(() => {
-            router.push({
-              pathname: '/pages/admission/phd/adm_phd_login'
-          },'/pages/admission/phd/adm_phd_login')
-        })
-        } else {
+            Callback({'msg':response.data,'status':2 });
+          } else {
 
-        }
+          }
       }).catch(err => {
         if (err) Callback({'msg':err , 'status':3})
         // setAdmnNoMsg({

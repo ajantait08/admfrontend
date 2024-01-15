@@ -49,6 +49,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContentText from '@mui/material/DialogContentText'
+import Alert from '@mui/material/Alert'
 
 //import FormControlLabel from '@mui/material/FormControlLabel'
 
@@ -165,6 +166,16 @@ const Img = styled('img')({
     position: 'absolute'
   })
 
+  const StyledBox = styled(Box)(({ theme }) => ({
+    padding: 15,
+    backgroundColor: '#d9edf7',
+    borderRadius: 5,
+    borderColor: '#bce8f1',
+    mb: 4 ,
+    display: 'flex',
+    justifyContent: 'center'
+  }))
+
 const SidebarComponent = () => {
   <Box sx={{ px:4 , py : 2 , height : 'calc(100vh - 12 rem)', backgroundColor: 'background.paper' }}>
     <h1>Sidebar</h1>
@@ -273,6 +284,12 @@ const AdmPhdReg = () => {
   })
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+  const [isDisplayError , setIsDisplayError] = useState(false);
+  const [isRegSuccussMsg , setIsRegSuccussMsg] = useState(false);
+  const [reg_no , setRegNo] = useState(false);
+
+  const [isDisplayErrorMsg , setIsDisplayErrorMsg] = useState('');
 
   // ** Hooks
   const auth = useAuth()
@@ -442,10 +459,10 @@ const AdmPhdReg = () => {
         setErrors({...errors , [prop] : 'Mobile No. is required'})
         setIsButtonDisabled(true)
       }
-      else if(!containsExactlyTenDigits(event.target.value)){
-        setErrors({...errors , [prop] : 'Mobile Number Should only contain 10 digits'})
-        setIsButtonDisabled(true)
-      }
+      // else if(!containsExactlyTenDigits(event.target.value)){
+      //   setErrors({...errors , [prop] : 'Mobile Number Should only contain 10 digits'})
+      //   setIsButtonDisabled(true)
+      // }
       else {
         setErrors({...errors , [prop] : ''})
         if(values.first_name != '' && values.category != '' && values.colorblindness != '' && values.salutation != '' && values.mobile != '' && values.blood_group != '' && values.email != '' && values.pwd != '' && values.gender != ''){
@@ -576,6 +593,7 @@ const AdmPhdReg = () => {
   const submitHandler = (event) => {
 
     event.preventDefault();
+    setIsButtonDisabled(true)
     var salutation = values.salutation;
     var first_name = values.first_name;
     var middle_name = values.middle_name;
@@ -607,20 +625,53 @@ const AdmPhdReg = () => {
     }
 
     auth.registerUser({ datanew }, (response) => {
-
      if(response.status === 3)
      {
      if(response.msg.message === 'validation error')
      {
         const errorFields = Object.keys(response.msg.errors);
         errorFields.map(fieldName => {
+        console.log(response.msg.errors[fieldName])
+        const fieldErrors = response.msg.errors[fieldName];
         setErrors(errors => ({
           ...errors,
-          [fieldName]: response.msg.errors[fieldName],
+          [fieldName]: (
+            <>
+            {fieldErrors.map((error, index) => (
+              <Fragment key={index}>
+                {index > 0 && <br />}
+                {error}
+              </Fragment>
+            ))}
+          </>
+          )
         }));
         });
         setIsButtonDisabled(true)
      }
+     else if(response.msg.message === 'Email Already Exists' || response.msg.message === 'Mobile Already Exists'){
+      setIsDisplayError(true)
+      setValues({
+        salutation: '',
+        first_name: '',
+        middle_name: '',
+        last_name: '',
+        category: '',
+        colorblindness: '',
+        mobile: '',
+        father_name: '',
+        blood_group: '',
+        email: '',
+        pwd: '',
+        gender: '',
+        dob: setBasicPicker(null)
+      });
+      setIsButtonDisabled(true)
+     }
+     }
+     else {
+       setIsRegSuccussMsg(true);
+       setRegNo(response.msg.registration_no)
      }
     })
     }
@@ -629,12 +680,53 @@ const AdmPhdReg = () => {
      console.log(event.target.value)
   }
 
+  const handleButtonClick = () => {
+     router.replace('');
+  }
+
   return (
     <DatePickerWrapper>
     <Box className='content-center'>
     <Grid container spacing={4} >
     <Grid item xs={12} md={2}>
     </Grid>
+    {isRegSuccussMsg ?  <Grid item xs={12} md={6}>
+    <Card sx={{ backgroundColor: `${theme.palette.common.phd_admission_dark}`}} >
+        <CardContent sx={{ p: theme => `${theme.spacing(12, 9, 7)} !important` }}>
+            <Box sx={{ mb: 8, alignItems: 'center', justifyContent: 'center' }}>
+    <Card>
+      <CardContent sx={{ p: theme => `${theme.spacing(12, 9, 7)} !important` }}>
+        <Box sx={{ mb: 8 }}>
+        <Card sx={{ backgroundColor: `${theme.palette.common.phd_admission}` ,overflow: 'visible', position: 'relative' }}>
+      <CardContent>
+
+      <Typography variant='h5' sx={{ color: `${theme.palette.common.phd_admission_dark}` , fontWeight: 800 , textAlign:'center'}}><u>Congratulations!!</u></Typography>
+
+      <Typography variant='div' sx={{ color: `${theme.palette.common.phd_admission_dark}` , fontWeight: 800}}>
+      <Typography variant='h6' sx={{ color: `${theme.palette.common.phd_admission_dark}` , fontWeight: 800 , padding: theme.spacing(5)}}>You are successfully registered. Please confirm the email
+                                                            sent to your email-id!
+     </Typography>
+     <Typography variant='h6' sx={{ color: `${theme.palette.common.phd_admission_dark}` , fontWeight: 800 , padding: theme.spacing(5)}}>Your registration number is {reg_no}.
+                                                            Please save it for future use.</Typography>
+                                                            </Typography>
+
+    <Typography variant='h6' sx={{ color: '#7b6767' , fontWeight: 800 , padding: theme.spacing(5)}}>NOTE : Please Remember , this is a Flash Message. Please Donot Refresh untill you have finished reading completely.</Typography>
+              {/* <Typography sx={{ color: 'text.secondary' }}>Enter Your Personal Information</Typography> */}
+        <div style={{ display: 'flex', justifyContent: 'right' }}>
+          <ButtonNew size='large' onclick={handleButtonClick} type='submit' variant='contained' sx={{ mb: 7}}>
+            GO BACK TO HOMEPAGE
+          </ButtonNew>
+        </div>
+      </CardContent>
+      </Card>
+      </Box>
+      </CardContent>
+      </Card>
+      </Box>
+      </CardContent>
+      </Card>
+    </Grid> :
+
     <Grid item xs={12} md={6}>
         <Card sx={{ backgroundColor: `${theme.palette.common.phd_admission_dark}`}} >
         <CardContent sx={{ p: theme => `${theme.spacing(12, 9, 7)} !important` }}>
@@ -677,6 +769,7 @@ const AdmPhdReg = () => {
     </Card>
         </Box>
 
+        {isDisplayError ? <Alert severity='error' sx={{margin: theme.spacing(10)}}>This is an error alert — check it out!</Alert> : ''}
         <form noValidate autoComplete='off' onSubmit={submitHandler}>
         <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
@@ -856,7 +949,7 @@ const AdmPhdReg = () => {
                   )
                 }}
               />
-                {errors.mobile && <FormHelperText sx={{ color: 'error.main' }}>{errors.mobile}</FormHelperText>}
+                {errors.mobile && <FormHelperText sx={{ color: 'error.main' }}>{errors.mobile}<br /></FormHelperText>}
                 {/* {errorList.last_name && <FormHelperText sx={{ color: 'error.main' }}>{errorList.last_name[0]}</FormHelperText>} */}
               </FormControl>
 
@@ -951,7 +1044,6 @@ const AdmPhdReg = () => {
           </ButtonNew>
           </Grid>
           </form>
-
         <Box sx={{ alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
             <Typography variant='body2' sx={{ mr: 2 }}>
               New To Login?
@@ -968,6 +1060,7 @@ const AdmPhdReg = () => {
 </CardContent>
     </Card>
     </Grid>
+      }
     </Grid>
     <FooterIllustrationsV1 />
   </Box>
