@@ -36,7 +36,7 @@ import Spinner from 'src/@core/components/spinner'
 
 // ** Contexts
 import { AuthProvider } from 'src/context/AuthContext'
-import { EmailVerifyProvider } from 'src/context/ProgramDetailsContext'
+import { EmailVerifyProvider } from 'src/context/EmailVerifyContext'
 import { SettingsConsumer, SettingsProvider } from 'src/@core/context/settingsContext'
 
 // ** Styled Components

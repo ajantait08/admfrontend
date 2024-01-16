@@ -50,6 +50,9 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContentText from '@mui/material/DialogContentText'
 import Alert from '@mui/material/Alert'
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useRouter } from 'next/router'
 
 //import FormControlLabel from '@mui/material/FormControlLabel'
 
@@ -288,8 +291,11 @@ const AdmPhdReg = () => {
   const [isDisplayError , setIsDisplayError] = useState(false);
   const [isRegSuccussMsg , setIsRegSuccussMsg] = useState(false);
   const [reg_no , setRegNo] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   const [isDisplayErrorMsg , setIsDisplayErrorMsg] = useState('');
+  const [backdropOpen , setBackdropOpen] = useState(false);
+  const router = useRouter();
 
   // ** Hooks
   const auth = useAuth()
@@ -594,6 +600,7 @@ const AdmPhdReg = () => {
 
     event.preventDefault();
     setIsButtonDisabled(true)
+    setBackdropOpen(true);
     var salutation = values.salutation;
     var first_name = values.first_name;
     var middle_name = values.middle_name;
@@ -627,6 +634,7 @@ const AdmPhdReg = () => {
     auth.registerUser({ datanew }, (response) => {
      if(response.status === 3)
      {
+      setBackdropOpen(false);
      if(response.msg.message === 'validation error')
      {
         const errorFields = Object.keys(response.msg.errors);
@@ -648,8 +656,11 @@ const AdmPhdReg = () => {
         }));
         });
         setIsButtonDisabled(true)
+
      }
      else if(response.msg.message === 'Email Already Exists' || response.msg.message === 'Mobile Already Exists'){
+      setLoading(false)
+      setBackdropOpen(false)
       setIsDisplayError(true)
       setValues({
         salutation: '',
@@ -670,6 +681,7 @@ const AdmPhdReg = () => {
      }
      }
      else {
+       setBackdropOpen(false);
        setIsRegSuccussMsg(true);
        setRegNo(response.msg.registration_no)
      }
@@ -680,12 +692,34 @@ const AdmPhdReg = () => {
      console.log(event.target.value)
   }
 
-  const handleButtonClick = () => {
-     router.replace('');
+  const clickHandler = () => {
+     console.log('Button Clicked');
+     router.replace('pages/admission/phd/adm_phd_home/');
   }
 
+  const handleBackdropClose = () => {
+    setBackdropOpen(false);
+  };
+  const handleBackdropToggle = () => {
+    setBackdropOpen(!backdropOpen);
+  };
+
   return (
+
     <DatePickerWrapper>
+       {/* <ButtonNew fullWidth size='large' onClick={handleBackdropToggle} type='submit' variant='contained' sx={{ mb: 7}}>
+            Show Backdrop
+          </ButtonNew> */}
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={backdropOpen}
+      >
+        <Typography variant='h5' sx={{ color: 'wheat' , fontWeight: 800 , textAlign:'center'}}>&nbsp;&nbsp;
+        <CircularProgress sx={{ color: 'wheat'}}
+        />
+        <br />
+        Please wait while processing Registration Details...</Typography>
+      </Backdrop>
     <Box className='content-center'>
     <Grid container spacing={4} >
     <Grid item xs={12} md={2}>
@@ -713,11 +747,13 @@ const AdmPhdReg = () => {
 
     <Typography variant='h6' sx={{ color: '#7b6767' , fontWeight: 800 , padding: theme.spacing(3)}}>NOTE : Please Remember , this is a Flash Message. Please Donot Refresh untill you have finished reading completely.</Typography>
               {/* <Typography sx={{ color: 'text.secondary' }}>Enter Your Personal Information</Typography> */}
+              <form noValidate autoComplete='off' onClick={clickHandler}>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <ButtonNew size='large' onclick={handleButtonClick} type='submit' variant='contained' sx={{ mb: 5}}>
+          <ButtonNew size='large' variant='contained' sx={{ mb: 5}}>
             GO BACK TO HOMEPAGE
           </ButtonNew>
         </div>
+        </form>
       </CardContent>
       </Card>
       </Box>
@@ -1047,11 +1083,11 @@ const AdmPhdReg = () => {
           </form>
         <Box sx={{ alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
             <Typography variant='body2' sx={{ mr: 2 }}>
-              New To Login?
+              Already Registered?
             </Typography>
             <Typography variant='body2'>
               <Link passHref href='/pages/auth/register-v1'>
-                <LinkStyled>Register Here</LinkStyled>
+                <LinkStyled>Login Here</LinkStyled>
               </Link>
             </Typography>
           </Box>

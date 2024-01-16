@@ -50,18 +50,18 @@ const EmailVerifyProvider = ({ children }) => {
   useEffect(() => {
     const initAuths = async (params, errorCallback) => {
       //setVerifyEmailMsg('Coding is Love')
-      console.log(window.location.origin)
+      //console.log(window.location.origin)
       const returnUrl = router.query.returnUrl
       const currentUrl = decodeURIComponent(returnUrl)
       const urlParts = currentUrl.split('/');  // Split the URL by '/'
       const lastPart = urlParts[urlParts.length - 1]; // Get the last part of the URL
       const datanew = {email : lastPart}
       if(isValidEmail(lastPart)){
-        router.replace("http://localhost:3000/admission/phd/verify_email");
-      }
-      }
-      initAuths()
-    }, [router])
+        router.replace("http://localhost:3000/admission/phd/verify_email?param1=value1");
+    }
+    }
+    initAuths()
+  }, [router])
 
   const values = {
     user,

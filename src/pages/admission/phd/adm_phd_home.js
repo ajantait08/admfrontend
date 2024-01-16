@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, Fragment , forwardRef , useEffect } from 'react'
+import { useState, Fragment , forwardRef } from 'react'
 
 // ** Next Imports
 import Link from 'next/link'
@@ -49,9 +49,6 @@ import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContentText from '@mui/material/DialogContentText'
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-import { useRouter } from 'next/router'
 
 //import FormControlLabel from '@mui/material/FormControlLabel'
 
@@ -224,9 +221,6 @@ const salutation = [
    'Dr.'
 ]
 
-const url = process.env.APIURL;
-//axios.defaults.withCredentials = true;
-
 
 const CustomInput = forwardRef((props, ref) => {
   return <TextField fullWidth {...props} inputRef={ref}  InputProps={{
@@ -241,52 +235,18 @@ const CustomInput = forwardRef((props, ref) => {
 })
 
 
-const VerifyEmail = () => {
+const RegSuccess = () => {
 
   // ** Hooks
   const auth = useAuth()
-  const router = useRouter()
   const theme = useTheme()
   const bgClasses = useBgColor()
   const { settings } = useSettings()
   const hidden = useMediaQuery(theme.breakpoints.down('md'))
-  const [backdropOpen , setBackdropOpen] = useState(false);
 
-  const param1 = router.query.param1;
-
-  useEffect(() => {
-    setBackdropOpen(true)
-    const emailVerify = async (params, errorCallback) => {
-   await axios
-  .post(url + 'verify_email',
-  {param1 : router.query.param1},{
-  headers: {
-    'Accept': 'application/json'
-  }})
-  .then(async response => {
-    setBackdropOpen(false)
-    //console.log('entered here email verify');
-    console.log(response);
-    }).catch(err => {
-    setBackdropOpen(false)
-    //if (err) Callback({'msg':err , 'status':3})
-    })
-  }
-  emailVerify()
-},[]);
 
   return (
     <DatePickerWrapper>
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={backdropOpen}
-      >
-        <Typography variant='h5' sx={{ color: 'wheat' , fontWeight: 800 , textAlign:'center'}}>&nbsp;&nbsp;
-        <CircularProgress sx={{ color: 'wheat'}}
-        />
-        <br />
-        Please wait while verifying Email...</Typography>
-      </Backdrop>
     <Box className='content-center'>
     <Grid container spacing={4} >
     <Grid item xs={12} md={2} sx={{ alignSelf: 'flex-start' }}>
@@ -334,7 +294,7 @@ const VerifyEmail = () => {
   )
 }
 
-VerifyEmail.guestGuard = true
-VerifyEmail.getlayout = page => <UserLayout>{page}</UserLayout>
+RegSuccess.guestGuard = true
+RegSuccess.getlayout = page => <UserLayout>{page}</UserLayout>
 
 export default VerifyEmail
