@@ -16,6 +16,7 @@ import { NotificationManager } from 'react-notifications';
 import { NotificationContainer } from 'react-notifications';
 import MuiAlert from '@mui/material/Alert';
 import swal from 'sweetalert';
+import he from 'he';
 
 // axios.defaults.baseURL = 'http://localhost:8000/';
 // axios.defaults.headers.post['Content-Type'] = 'application/json';

@@ -114,6 +114,7 @@ import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 
 
 import 'react-datepicker/dist/react-datepicker.css'
+import he from 'he';
 
 
 // ** Styled Components
@@ -251,15 +252,35 @@ const VerifyEmail = () => {
   const { settings } = useSettings()
   const hidden = useMediaQuery(theme.breakpoints.down('md'))
   const [backdropOpen , setBackdropOpen] = useState(false);
+  const [] = useState(false);
 
-  const param1 = router.query.param1;
+
+  // const param1 = router.query.email;
+  // const decodeparam1 = param1 ? atob(param1) : null;
+
+  // function decodeEmail(encodedEmail) {
+  //   var decodedEmail = "";
+  //   var charCodes = encodedEmail.split(";");
+  //   for (var i = 0; i < charCodes.length - 1; i++) {
+  //     var code = charCodes[i].replace("&#", "");
+  //     decodedEmail += String.fromCharCode(code);
+  //   }
+  //   return decodedEmail;
+  // }
 
   useEffect(() => {
     setBackdropOpen(true)
-    const emailVerify = async (params, errorCallback) => {
+    const param1 = router.query.email;
+    console.log('DOM Rendered')
+    console.log(param1)
+    const decodeparam1 = param1 ? atob(param1) : null;
+    var datanew  = {
+    email : decodeparam1,
+    }
+    const emailVerify = async () => {
    await axios
   .post(url + 'verify_email',
-  {param1 : router.query.param1},{
+  {email : datanew.email},{
   headers: {
     'Accept': 'application/json'
   }})
@@ -273,7 +294,7 @@ const VerifyEmail = () => {
     })
   }
   emailVerify()
-},[]);
+},[router.query.email]);
 
   return (
     <DatePickerWrapper>

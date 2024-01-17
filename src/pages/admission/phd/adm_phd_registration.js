@@ -662,6 +662,7 @@ const AdmPhdReg = () => {
       setLoading(false)
       setBackdropOpen(false)
       setIsDisplayError(true)
+      setIsDisplayErrorMsg(response.msg.error)
       setValues({
         salutation: '',
         first_name: '',
@@ -693,7 +694,6 @@ const AdmPhdReg = () => {
   }
 
   const clickHandler = () => {
-     console.log('Button Clicked');
      router.replace('pages/admission/phd/adm_phd_home/');
   }
 
@@ -806,7 +806,7 @@ const AdmPhdReg = () => {
     </Card>
         </Box>
 
-        {isDisplayError ? <Alert severity='error' sx={{margin: theme.spacing(10)}}>This is an error alert — check it out!</Alert> : ''}
+        {isDisplayError ? <Alert severity='error' sx={{margin: theme.spacing(10)}}>{isDisplayErrorMsg ? isDisplayErrorMsg : 'Sorry There is no appropriate message to display'}</Alert> : ''}
         <form noValidate autoComplete='off' onSubmit={submitHandler}>
         <Grid container spacing={2}>
             <Grid item xs={12} md={6}>

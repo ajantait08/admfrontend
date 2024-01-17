@@ -16,6 +16,7 @@ import { NotificationManager } from 'react-notifications';
 import { NotificationContainer } from 'react-notifications';
 import MuiAlert from '@mui/material/Alert';
 import swal from 'sweetalert';
+import he from 'he';
 
 // axios.defaults.baseURL = 'http://localhost:8000/';
 // axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -45,6 +46,15 @@ const EmailVerifyProvider = ({ children }) => {
   function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
+
+  function encodeEmail(param1){
+    // console.log('param1'+param1);
+    // const encodeparam1 = param1 ? he.encode(param1) : null;
+    // console.log('encodeparam1'+encodeparam1);
+    // return encodeparam1;
+    const encoded = btoa(param1);
+    return encoded;
+  }
   // ** Hooks
   const router = useRouter()
   useEffect(() => {
@@ -55,10 +65,10 @@ const EmailVerifyProvider = ({ children }) => {
       const currentUrl = decodeURIComponent(returnUrl)
       const urlParts = currentUrl.split('/');  // Split the URL by '/'
       const lastPart = urlParts[urlParts.length - 1]; // Get the last part of the URL
-      const datanew = {email : lastPart}
+      //const lastPart = 'a_@g.com';
       if(isValidEmail(lastPart)){
-        router.replace("http://localhost:3000/admission/phd/verify_email?param1=value1");
-    }
+        router.replace("http://localhost:3000/admission/phd/verify_email?email="+encodeEmail(lastPart));
+      }
     }
     initAuths()
   }, [router])

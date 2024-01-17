@@ -235,7 +235,7 @@ const CustomInput = forwardRef((props, ref) => {
 })
 
 
-const RegSuccess = () => {
+const AdmPhdHome = () => {
 
   // ** Hooks
   const auth = useAuth()
@@ -243,7 +243,6 @@ const RegSuccess = () => {
   const bgClasses = useBgColor()
   const { settings } = useSettings()
   const hidden = useMediaQuery(theme.breakpoints.down('md'))
-
 
   return (
     <DatePickerWrapper>
@@ -294,7 +293,7 @@ const RegSuccess = () => {
   )
 }
 
-RegSuccess.guestGuard = true
-RegSuccess.getlayout = page => <UserLayout>{page}</UserLayout>
+AdmPhdHome.guestGuard = true
+AdmPhdHome.getlayout = page => <UserLayout>{page}</UserLayout>
 
 export default VerifyEmail
