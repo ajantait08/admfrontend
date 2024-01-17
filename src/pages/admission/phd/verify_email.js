@@ -114,7 +114,7 @@ import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 
 
 import 'react-datepicker/dist/react-datepicker.css'
-import he from 'he';
+//import he from 'he';
 
 
 // ** Styled Components
@@ -252,7 +252,7 @@ const VerifyEmail = () => {
   const { settings } = useSettings()
   const hidden = useMediaQuery(theme.breakpoints.down('md'))
   const [backdropOpen , setBackdropOpen] = useState(false);
-  const [] = useState(false);
+  //const [] = useState(false);
 
 
   // const param1 = router.query.email;
@@ -269,32 +269,41 @@ const VerifyEmail = () => {
   // }
 
   useEffect(() => {
-    setBackdropOpen(true)
-    const param1 = router.query.email;
-    console.log('DOM Rendered')
-    console.log(param1)
-    const decodeparam1 = param1 ? atob(param1) : null;
-    var datanew  = {
-    email : decodeparam1,
-    }
-    const emailVerify = async () => {
-   await axios
-  .post(url + 'verify_email',
-  {email : datanew.email},{
-  headers: {
-    'Accept': 'application/json'
-  }})
-  .then(async response => {
-    setBackdropOpen(false)
-    //console.log('entered here email verify');
-    console.log(response);
-    }).catch(err => {
-    setBackdropOpen(false)
-    //if (err) Callback({'msg':err , 'status':3})
-    })
-  }
-  emailVerify()
-},[router.query.email]);
+    const fetchData = async () => {
+      setBackdropOpen(true);
+      try {
+        const param1 = router.query.email;
+
+        if (param1) {
+          const decodeParam1 = atob(param1);
+          const data = {
+            email: decodeParam1,
+          };
+          await axios.post(url + 'verify_email', data, {
+            headers: {
+              'Accept': 'application/json',
+            },
+          }).then(async (response) => {
+            setBackdropOpen(false);
+          }).catch(err =>
+            {
+              setBackdropOpen(false);
+            }
+          );
+
+        }
+        else {
+          setBackdropOpen(true);
+        }
+      } catch (error) {
+        setBackdropOpen(true);
+      }
+    };
+
+    fetchData();
+  }, [router.query.email]); // Add router.query.email to the dependencies array
+
+  // Rest of your component code
 
   return (
     <DatePickerWrapper>
