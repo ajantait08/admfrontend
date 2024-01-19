@@ -252,6 +252,7 @@ const VerifyEmail = () => {
   const { settings } = useSettings()
   const hidden = useMediaQuery(theme.breakpoints.down('md'))
   const [backdropOpen , setBackdropOpen] = useState(false);
+  const [emailErrStatus , setEmailErrStatus] = useState('');
   //const [] = useState(false);
 
 
@@ -273,7 +274,6 @@ const VerifyEmail = () => {
       setBackdropOpen(true);
       try {
         const param1 = router.query.email;
-
         if (param1) {
           const decodeParam1 = atob(param1);
           const data = {
@@ -285,12 +285,14 @@ const VerifyEmail = () => {
             },
           }).then(async (response) => {
             setBackdropOpen(false);
+            if(response.data.status === true){
+              setEmailErrStatus(false);
+            }
           }).catch(err =>
             {
               setBackdropOpen(false);
             }
           );
-
         }
         else {
           setBackdropOpen(true);
@@ -299,7 +301,6 @@ const VerifyEmail = () => {
         setBackdropOpen(true);
       }
     };
-
     fetchData();
   }, [router.query.email]); // Add router.query.email to the dependencies array
 
@@ -327,29 +328,14 @@ const VerifyEmail = () => {
             <Box sx={{ mb: 8, alignItems: 'center', justifyContent: 'center' }}>
     <Card sx={{ width: '750px !important'}}>
       <CardContent sx={{ p: theme => `${theme.spacing(12, 9, 7)} !important` }}>
+      {emailErrStatus ? <Alert severity='error' sx={{margin: theme.spacing(10)}}>{isDisplayErrorMsg ? isDisplayErrorMsg : 'Sorry There is no appropriate message to display'}</Alert> : ''}
         <Box sx={{ mb: 8 }}>
         <Card sx={{ backgroundColor: `${theme.palette.common.phd_admission}` , width: '700px !important', overflow: 'visible', position: 'relative' }}>
       <CardContent>
-        <Typography variant='h5' sx={{ mb: 6.5, fontWeight: 600 }}>
-         Welcome to {themeConfig.templateName} !
-        </Typography>
-        <Box sx={{ mb: 1.5, rowGap: 1, width: '65%', display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start' }}>
-          <Typography variant='h5' sx={{ mr: 1.5 }}>
-            Registration Form &nbsp;&nbsp;
-            <IconButton
-                            edge='start'
-                            onMouseDown={e => e.preventDefault()}
-                          >
-                            <Icon icon='mdi:file-document-edit' fontSize={20} />
-                          </IconButton>
 
-          </Typography>
-
-        </Box>
-
-        <Img src="/images/pages/create-deal-review-complete.png" alt="Ratings"/>
       </CardContent>
     </Card>
+
         </Box>
       </CardContent>
     </Card>

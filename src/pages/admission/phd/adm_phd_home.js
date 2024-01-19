@@ -149,11 +149,9 @@ const TabList = styled(MuiTabList)(({ theme }) => ({
 }))
 
   const ButtonNew = styled(Button)(({theme}) => ({
-
         '& .MuiButton-root' : {
         backgroundColor: `${theme.palette.common.phd_admission_dark} !important`
     }
-
   }))
 
 

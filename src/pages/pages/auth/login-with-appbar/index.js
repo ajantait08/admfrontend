@@ -229,6 +229,8 @@ const LoginWithAppBar = () => {
     </Box>
   )
 }
+
+LoginWithAppBar.guestGuard = true
 LoginWithAppBar.getLayout = page => <BlankLayoutWithAppBar>{page}</BlankLayoutWithAppBar>
 
 export default LoginWithAppBar
