@@ -405,8 +405,6 @@ const LoginV1 = () => {
               <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}>
                 Login
               </Button>
-
-
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
                 <Typography variant='body2' sx={{ mr: 2 }}>
