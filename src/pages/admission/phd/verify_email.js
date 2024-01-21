@@ -332,10 +332,8 @@ const VerifyEmail = () => {
         <Box sx={{ mb: 8 }}>
         <Card sx={{ backgroundColor: `${theme.palette.common.phd_admission}` , width: '700px !important', overflow: 'visible', position: 'relative' }}>
       <CardContent>
-
       </CardContent>
     </Card>
-
         </Box>
       </CardContent>
     </Card>

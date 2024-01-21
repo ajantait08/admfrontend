@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, Fragment } from 'react'
+import { useState, Fragment , useEffect } from 'react'
 
 // ** Next Imports
 import Link from 'next/link'
@@ -124,6 +124,18 @@ const TabList = styled(MuiTabList)(({ theme }) => ({
   }
 }))
 
+const ReCAPTCHANew = styled(ReCAPTCHA)(({ theme }) => ({
+  [theme.breakpoints.down('xl')]: {
+    width: '100%'
+  },
+  [theme.breakpoints.down('md')]: {
+    width: '100%'
+  },
+  [theme.breakpoints.down('sx')]: {
+    width: 600
+  }
+}))
+
 const BoxWrapper = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down('xl')]: {
     width: '100%'
@@ -188,6 +200,9 @@ const LoginV1 = () => {
     //   console.log(event.target.value)
     set(event.target.value)
 }
+
+
+
 
 
     const [values, setValues] = useState({
@@ -287,6 +302,45 @@ const LoginV1 = () => {
       });
   }
 
+  const scaleCaptcha = () => {
+    const recaptchaElement = document.querySelector('.g-recaptcha-response');
+
+    if (recaptchaElement) {
+      // Get the container width based on the theme breakpoints
+      //const containerWidth = theme.breakpoints.values.md; // Adjust the breakpoint as needed
+      //console.log('log container width'+containerWidth)
+
+      const containerWidth = 400
+
+      // Width of the reCAPTCHA element
+      const reCaptchaWidth = 800;
+
+      // Only scale the reCAPTCHA if it won't fit inside the container
+      if (reCaptchaWidth > containerWidth) {
+
+        // Calculate the scale
+        const captchaScale = containerWidth / reCaptchaWidth;
+        // Apply the transformation
+        recaptchaElement.style.transform = `scale(${captchaScale})`;
+      }
+    }
+  };
+
+  useEffect(() => {
+    // Initialize scaling
+    scaleCaptcha();
+
+    // Update scaling on window resize
+    const handleResize = () => scaleCaptcha();
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [theme.breakpoints.values.md]); // Listen for changes in the md breakpoint
+
+
   const handleSubmit = (e) => {
        e.preventDefault();
     }
@@ -342,7 +396,7 @@ const LoginV1 = () => {
           <BoxWrapper>
             <Box sx={{ mb: 6 }}>
               <TypographyStyled variant='h5'>Welcome to {themeConfig.templateName}! 👋🏻</TypographyStyled>
-              <Typography variant='body2'>Please sign-in to your account and start the adventure</Typography>
+              <Typography variant='body2' sx={{fontWeight:'bold'}}>Please sign-in to your account and start the adventure</Typography>
             </Box>
             <form noValidate autoComplete='off' onSubmit={handleSubmit}>
             <FormControl fullWidth sx={{ mb: 4 }}>
@@ -389,12 +443,13 @@ const LoginV1 = () => {
               </FormControl>
 
               <FormControl fullWidth sx={{ mb: 4 }}>
-              <ReCAPTCHA sitekey={sitekey} value={values.google_captcha}
+              <ReCAPTCHANew sitekey={sitekey} value={values.google_captcha}
               onChange={handleChangeFormData('google_captcha')}
               error={Boolean(errors.google_captcha)} />
               {errors.google_captcha && <FormHelperText sx={{ color: 'error.main' }}>{errors.google_captcha.message}</FormHelperText>}
               {errorList.google_captcha && <FormHelperText sx={{ color: 'error.main' }}>{errorList.google_captcha[0]}</FormHelperText>}
               </FormControl>
+
               <Box
                 sx={{ mb: 4, display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}
               >
@@ -406,40 +461,36 @@ const LoginV1 = () => {
                 Login
               </Button>
               </Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-                <Typography variant='body2' sx={{ mr: 2 }}>
-                  New on our platform?
-                </Typography>
-                <Typography variant='body2'>
-                  <Link passHref href='/pages/auth/register-v2'>
-                    <LinkStyled>Create an account</LinkStyled>
-                  </Link>
+
+              <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' , marginTop: '-21px' }}>
+              <Typography variant='body2' sx={{fontWeight:'bold'}}>
+                 <Link passHref href='/pages/auth/forgot-password-v2'>
+                  <LinkStyled>Forgot Password&nbsp;? &nbsp;&nbsp;<IconButton
+                            edge='start'
+                            onMouseDown={e => e.preventDefault()}
+                          >
+                            <Icon icon='mdi:lock-reset' fontSize='inherit' />
+                          </IconButton></LinkStyled>
+                </Link>
                 </Typography>
               </Box>
-              <Divider sx={{ my: 5 }}>or</Divider>
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Link href='/' passHref>
-                  <IconButton component='a' onClick={e => e.preventDefault()}>
-                    <Facebook sx={{ color: '#497ce2' }} />
-                  </IconButton>
-                </Link>
-                <Link href='/' passHref>
-                  <IconButton component='a' onClick={e => e.preventDefault()}>
-                    <Twitter sx={{ color: '#1da1f2' }} />
-                  </IconButton>
-                </Link>
-                <Link href='/' passHref>
-                  <IconButton component='a' onClick={e => e.preventDefault()}>
-                    <Github
-                      sx={{ color: theme => (theme.palette.mode === 'light' ? '#272727' : theme.palette.grey[300]) }}
-                    />
-                  </IconButton>
-                </Link>
-                <Link href='/' passHref>
-                  <IconButton component='a' onClick={e => e.preventDefault()}>
-                    <Google sx={{ color: '#db4437' }} />
-                  </IconButton>
-                </Link>
+
+              <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+
+                <Typography variant='body2' sx={{fontWeight:'bold'}}>
+                 Don't have an account&nbsp;&nbsp;
+                  <IconButton
+                            edge='start'
+                            onMouseDown={e => e.preventDefault()}
+                          >
+                            <Icon icon='ph:question-bold' fontSize='inherit' />
+                          </IconButton>
+                </Typography>
+                <Typography variant='body2' sx={{fontWeight:'bold'}}>
+                  <Link passHref href='/pages/auth/register-v2'>
+                    <LinkStyled>Sign Up</LinkStyled>
+                  </Link>
+                </Typography>
               </Box>
             </form>
           </BoxWrapper>
