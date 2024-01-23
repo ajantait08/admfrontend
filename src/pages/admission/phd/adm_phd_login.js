@@ -91,7 +91,7 @@ import { NoteMultiple } from 'mdi-material-ui'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
-  [theme.breakpoints.up('sm')]: { width: '34rem' }
+  [theme.breakpoints.up('sm')]: { width: '30rem' }
 }))
 
 const LinkStyled = styled('a')(({ theme }) => ({
@@ -124,17 +124,17 @@ const TabList = styled(MuiTabList)(({ theme }) => ({
   }
 }))
 
-const ReCAPTCHANew = styled(ReCAPTCHA)(({ theme }) => ({
-  [theme.breakpoints.down('xl')]: {
-    width: '100%'
-  },
-  [theme.breakpoints.down('md')]: {
-    width: '100%'
-  },
-  [theme.breakpoints.down('sx')]: {
-    width: 600
-  }
-}))
+// const ReCAPTCHANew = styled(ReCAPTCHA)(({ theme }) => ({
+//   [theme.breakpoints.down('xl')]: {
+//     width: '100%'
+//   },
+//   [theme.breakpoints.down('md')]: {
+//     width: '100%'
+//   },
+//   [theme.breakpoints.down('sx')]: {
+//     width: 600
+//   }
+// }))
 
 const BoxWrapper = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down('xl')]: {
@@ -170,13 +170,18 @@ const LoginV1 = () => {
   const [isdummyname , setdummyname] = useState('ajanta');
   const [newValue , setnewvalue] = useState('');
   const [errorList, setErrorList] = useState([]);
+  const [containerWidth , setContainerWidth] = useState('');
 
   // ** Hooks
   const auth = useAuth()
   const theme = useTheme()
   const bgClasses = useBgColor()
   const { settings } = useSettings()
-  const hidden = useMediaQuery(theme.breakpoints.down('md'))
+  const isXs = useMediaQuery(theme.breakpoints.down('xs'));
+  const isSm = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMd = useMediaQuery(theme.breakpoints.down('md'));
+  const isLg = useMediaQuery(theme.breakpoints.down('lg'));
+  const isXl = useMediaQuery(theme.breakpoints.down('xl'));
 
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
@@ -304,29 +309,53 @@ const LoginV1 = () => {
 
   const scaleCaptcha = () => {
     const recaptchaElement = document.querySelector('.g-recaptcha-response');
+    const upperElement = document.querySelector('.css-1eirc4l-MuiCardContent-root');
 
     if (recaptchaElement) {
-      // Get the container width based on the theme breakpoints
-      //const containerWidth = theme.breakpoints.values.md; // Adjust the breakpoint as needed
-      //console.log('log container width'+containerWidth)
+        if(isXs){
+        setContainerWidth(theme.breakpoints.values.xs);
+        }
+        else if(isSm){
+        setContainerWidth(theme.breakpoints.values.sm);
+        }
+        else if(isMd){
+        setContainerWidth(theme.breakpoints.values.md);
+        }
+        else if(isLg){
+        setContainerWidth(theme.breakpoints.values.lg);
+        }
+        else if(isXl){
+        setContainerWidth(theme.breakpoints.values.xl);
+        }
+        else{
+        }
 
-      const containerWidth = 400
-
-      // Width of the reCAPTCHA element
-      const reCaptchaWidth = 800;
-
-      // Only scale the reCAPTCHA if it won't fit inside the container
-      if (reCaptchaWidth > containerWidth) {
-
-        // Calculate the scale
-        const captchaScale = containerWidth / reCaptchaWidth;
-        // Apply the transformation
-        recaptchaElement.style.transform = `scale(${captchaScale})`;
-      }
+        const reCaptchaWidth = 700;
+        if (reCaptchaWidth > containerWidth) {
+          recaptchaElement.style.width = 200
+        }
     }
   };
 
   useEffect(() => {
+
+    if(isXs){
+      setContainerWidth(theme.breakpoints.values.xs);
+      }
+      else if(isSm){
+      setContainerWidth(theme.breakpoints.values.sm);
+      }
+      else if(isMd){
+      setContainerWidth(theme.breakpoints.values.md);
+      }
+      else if(isLg){
+      setContainerWidth(theme.breakpoints.values.lg);
+      }
+      else if(isXl){
+      setContainerWidth(theme.breakpoints.values.xl);
+      }
+      else{
+      }
     // Initialize scaling
     scaleCaptcha();
 
@@ -338,7 +367,7 @@ const LoginV1 = () => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [theme.breakpoints.values.md]); // Listen for changes in the md breakpoint
+  }, [containerWidth]); // Listen for changes in the md breakpoint
 
 
   const handleSubmit = (e) => {
@@ -348,7 +377,6 @@ const LoginV1 = () => {
 
 
   const onClick = data => {
-
 
     auth.checkLoginAdmnNo({ data }, (response) => {
 
@@ -373,19 +401,17 @@ const LoginV1 = () => {
     })
   }
   return (
-    <Box className='content-center'>
+
+    <>
     <Grid container spacing={4} >
   <Grid item xs={12} md={4} sx={{ alignSelf: 'flex-start' }}>
 </Grid>
 <Grid item xs={12} md={6} sx={{ alignSelf: 'flex-start' }}>
     <Card sx={{ zIndex: 1 }}>
-      <CardContent sx={{ p: theme => `${theme.spacing(12, 9, 7)} !important` , backgroundColor:'#849fa7'}}>
-        <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
- <Card>
-     <CardContent>
+      <CardContent sx={{ p: theme => `${theme.spacing(5)} !important` , backgroundColor:'#849fa7'}}>
      <Box
           sx={{
-            p: 12,
+            p: 5,
             height: '100%',
             display: 'flex',
             alignItems: 'center',
@@ -443,7 +469,7 @@ const LoginV1 = () => {
               </FormControl>
 
               <FormControl fullWidth sx={{ mb: 4 }}>
-              <ReCAPTCHANew sitekey={sitekey} value={values.google_captcha}
+              <ReCAPTCHA sitekey={sitekey} value={values.google_captcha}
               onChange={handleChangeFormData('google_captcha')}
               error={Boolean(errors.google_captcha)} />
               {errors.google_captcha && <FormHelperText sx={{ color: 'error.main' }}>{errors.google_captcha.message}</FormHelperText>}
@@ -495,15 +521,12 @@ const LoginV1 = () => {
             </form>
           </BoxWrapper>
         </Box>
-      </CardContent>
-    </Card>
-    </Box>
    </CardContent>
     </Card>
     </Grid>
     </Grid>
     <FooterIllustrationsV1 />
-  </Box>
+    </>
   )
 }
 

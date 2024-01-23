@@ -1,0 +1,3 @@
+<Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}>
+              Forgot Password?
+              </Button>
