@@ -171,6 +171,7 @@ const LoginV1 = () => {
   const [newValue , setnewvalue] = useState('');
   const [errorList, setErrorList] = useState([]);
   const [containerWidth , setContainerWidth] = useState('');
+  const [captchaStyle , setCaptchaStyle] = useState(false);
 
   // ** Hooks
   const auth = useAuth()
@@ -205,10 +206,6 @@ const LoginV1 = () => {
     //   console.log(event.target.value)
     set(event.target.value)
 }
-
-
-
-
 
     const [values, setValues] = useState({
       salutation : '',
@@ -307,74 +304,36 @@ const LoginV1 = () => {
       });
   }
 
-  const scaleCaptcha = () => {
-    const recaptchaElement = document.querySelector('.g-recaptcha-response');
-    const upperElement = document.querySelector('.css-1eirc4l-MuiCardContent-root');
-
-    if (recaptchaElement) {
-        if(isXs){
-        setContainerWidth(theme.breakpoints.values.xs);
-        }
-        else if(isSm){
-        setContainerWidth(theme.breakpoints.values.sm);
-        }
-        else if(isMd){
-        setContainerWidth(theme.breakpoints.values.md);
-        }
-        else if(isLg){
-        setContainerWidth(theme.breakpoints.values.lg);
-        }
-        else if(isXl){
-        setContainerWidth(theme.breakpoints.values.xl);
-        }
-        else{
-        }
-
-        const reCaptchaWidth = 700;
-        if (reCaptchaWidth > containerWidth) {
-          recaptchaElement.style.width = 200
-        }
-    }
-  };
-
   useEffect(() => {
-
     if(isXs){
-      setContainerWidth(theme.breakpoints.values.xs);
+      console.log('xs')
+      setCaptchaStyle(true)
       }
       else if(isSm){
-      setContainerWidth(theme.breakpoints.values.sm);
+        console.log('sm')
+      setCaptchaStyle(true)
       }
       else if(isMd){
-      setContainerWidth(theme.breakpoints.values.md);
+        console.log('md')
+      setCaptchaStyle(true)
       }
       else if(isLg){
-      setContainerWidth(theme.breakpoints.values.lg);
+        console.log('lg')
+      setCaptchaStyle(false)
       }
       else if(isXl){
-      setContainerWidth(theme.breakpoints.values.xl);
+        console.log('xl')
+      setCaptchaStyle(false)
       }
       else{
       }
-    // Initialize scaling
-    scaleCaptcha();
 
-    // Update scaling on window resize
-    const handleResize = () => scaleCaptcha();
-    window.addEventListener('resize', handleResize);
-
-    // Cleanup the event listener on component unmount
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
   }, [containerWidth]); // Listen for changes in the md breakpoint
 
 
   const handleSubmit = (e) => {
        e.preventDefault();
     }
-
-
 
   const onClick = data => {
 
@@ -403,24 +362,25 @@ const LoginV1 = () => {
   return (
 
     <>
+
     <Grid container spacing={4} >
   <Grid item xs={12} md={4} sx={{ alignSelf: 'flex-start' }}>
 </Grid>
 <Grid item xs={12} md={6} sx={{ alignSelf: 'flex-start' }}>
     <Card sx={{ zIndex: 1 }}>
-      <CardContent sx={{ p: theme => `${theme.spacing(5)} !important` , backgroundColor:'#849fa7'}}>
+      <CardContent sx={{backgroundColor:'#849fa7',padding : '8px !important'}}>
      <Box
           sx={{
-            p: 5,
             height: '100%',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: 'background.paper'
+            backgroundColor: 'background.paper',
+            padding : '8px'
           }}
         >
           <BoxWrapper>
-            <Box sx={{ mb: 6 }}>
+            <Box sx={{ mb: 6}}>
               <TypographyStyled variant='h5'>Welcome to {themeConfig.templateName}! 👋🏻</TypographyStyled>
               <Typography variant='body2' sx={{fontWeight:'bold'}}>Please sign-in to your account and start the adventure</Typography>
             </Box>
@@ -468,13 +428,23 @@ const LoginV1 = () => {
                 {errors.password && <FormHelperText sx={{ color: 'error.main' }}>{errors.password}</FormHelperText>}
               </FormControl>
 
-              <FormControl fullWidth sx={{ mb: 4 }}>
+              { captchaStyle ?
+              <FormControl fullWidth sx={{ m : '0px 0px 0px -20px', transform : 'scale(0.7,0.8)'}}>
               <ReCAPTCHA sitekey={sitekey} value={values.google_captcha}
               onChange={handleChangeFormData('google_captcha')}
               error={Boolean(errors.google_captcha)} />
               {errors.google_captcha && <FormHelperText sx={{ color: 'error.main' }}>{errors.google_captcha.message}</FormHelperText>}
               {errorList.google_captcha && <FormHelperText sx={{ color: 'error.main' }}>{errorList.google_captcha[0]}</FormHelperText>}
               </FormControl>
+              :
+              <FormControl fullWidth sx={{ m : 2}}>
+              <ReCAPTCHA sitekey={sitekey} value={values.google_captcha}
+              onChange={handleChangeFormData('google_captcha')}
+              error={Boolean(errors.google_captcha)} />
+              {errors.google_captcha && <FormHelperText sx={{ color: 'error.main' }}>{errors.google_captcha.message}</FormHelperText>}
+              {errorList.google_captcha && <FormHelperText sx={{ color: 'error.main' }}>{errorList.google_captcha[0]}</FormHelperText>}
+              </FormControl>
+              }
 
               <Box
                 sx={{ mb: 4, display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}
