@@ -91,7 +91,7 @@ import { NoteMultiple } from 'mdi-material-ui'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
-  [theme.breakpoints.up('sm')]: { width: '30rem' }
+  [theme.breakpoints.up('sm')]: { width: '34rem' }
 }))
 
 const LinkStyled = styled('a')(({ theme }) => ({
@@ -124,17 +124,17 @@ const TabList = styled(MuiTabList)(({ theme }) => ({
   }
 }))
 
-// const ReCAPTCHANew = styled(ReCAPTCHA)(({ theme }) => ({
-//   [theme.breakpoints.down('xl')]: {
-//     width: '100%'
-//   },
-//   [theme.breakpoints.down('md')]: {
-//     width: '100%'
-//   },
-//   [theme.breakpoints.down('sx')]: {
-//     width: 600
-//   }
-// }))
+const ReCAPTCHANew = styled(ReCAPTCHA)(({ theme }) => ({
+  [theme.breakpoints.down('xl')]: {
+    width: '100%'
+  },
+  [theme.breakpoints.down('md')]: {
+    width: '100%'
+  },
+  [theme.breakpoints.down('sx')]: {
+    width: 600
+  }
+}))
 
 const BoxWrapper = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down('xl')]: {
@@ -149,11 +149,6 @@ const TypographyStyled = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
   marginBottom: theme.spacing(1.5),
   [theme.breakpoints.down('md')]: { mt: theme.spacing(8) }
-}))
-
-const FormControlStyled = styled(FormControl)(({ theme }) => ({
-  marginBottom: 4,
-  [theme.breakpoints.down('md')] : { margin: '0px 0px 0px -21px !important' ,transform : 'scale(0.7,0.8)'},
 }))
 
 const SidebarComponent = () => {
@@ -175,19 +170,13 @@ const LoginV1 = () => {
   const [isdummyname , setdummyname] = useState('ajanta');
   const [newValue , setnewvalue] = useState('');
   const [errorList, setErrorList] = useState([]);
-  const [containerWidth , setContainerWidth] = useState('');
-  const [captchaStyle , setCaptchaStyle] = useState(false);
 
   // ** Hooks
   const auth = useAuth()
   const theme = useTheme()
   const bgClasses = useBgColor()
   const { settings } = useSettings()
-  const isXs = useMediaQuery(theme.breakpoints.down('xs'));
-  const isSm = useMediaQuery(theme.breakpoints.down('sm'));
-  const isMd = useMediaQuery(theme.breakpoints.down('md'));
-  const isLg = useMediaQuery(theme.breakpoints.down('lg'));
-  const isXl = useMediaQuery(theme.breakpoints.down('xl'));
+  const hidden = useMediaQuery(theme.breakpoints.down('md'))
 
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
@@ -211,6 +200,10 @@ const LoginV1 = () => {
     //   console.log(event.target.value)
     set(event.target.value)
 }
+
+
+
+
 
     const [values, setValues] = useState({
       salutation : '',
@@ -309,38 +302,53 @@ const LoginV1 = () => {
       });
   }
 
-  useEffect(() => {
-    if(isXs){
-      console.log('xs')
-      setCaptchaStyle(true)
-      }
-      else if(isSm){
-        console.log('sm')
-      setCaptchaStyle(true)
-      }
-      else if(isMd){
-        console.log('md')
-      setCaptchaStyle(true)
-      }
-      else if(isLg){
-        console.log('lg')
-      setCaptchaStyle(false)
-      }
-      else if(isXl){
-        console.log('xl')
-      setCaptchaStyle(false)
-      }
-      else{
-      }
+  const scaleCaptcha = () => {
+    const recaptchaElement = document.querySelector('.g-recaptcha-response');
 
-  }, [containerWidth]); // Listen for changes in the md breakpoint
+    if (recaptchaElement) {
+      // Get the container width based on the theme breakpoints
+      //const containerWidth = theme.breakpoints.values.md; // Adjust the breakpoint as needed
+      //console.log('log container width'+containerWidth)
+
+      const containerWidth = 400
+
+      // Width of the reCAPTCHA element
+      const reCaptchaWidth = 800;
+
+      // Only scale the reCAPTCHA if it won't fit inside the container
+      if (reCaptchaWidth > containerWidth) {
+
+        // Calculate the scale
+        const captchaScale = containerWidth / reCaptchaWidth;
+        // Apply the transformation
+        recaptchaElement.style.transform = `scale(${captchaScale})`;
+      }
+    }
+  };
+
+  useEffect(() => {
+    // Initialize scaling
+    scaleCaptcha();
+
+    // Update scaling on window resize
+    const handleResize = () => scaleCaptcha();
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [theme.breakpoints.values.md]); // Listen for changes in the md breakpoint
 
 
   const handleSubmit = (e) => {
        e.preventDefault();
     }
 
+
+
   const onClick = data => {
+
 
     auth.checkLoginAdmnNo({ data }, (response) => {
 
@@ -365,27 +373,28 @@ const LoginV1 = () => {
     })
   }
   return (
-
-    <>
-
+    <Box className='content-center'>
     <Grid container spacing={4} >
   <Grid item xs={12} md={4} sx={{ alignSelf: 'flex-start' }}>
 </Grid>
 <Grid item xs={12} md={6} sx={{ alignSelf: 'flex-start' }}>
     <Card sx={{ zIndex: 1 }}>
-      <CardContent sx={{backgroundColor:'#849fa7',padding : '8px !important'}}>
+      <CardContent sx={{ p: theme => `${theme.spacing(12, 9, 7)} !important` , backgroundColor:'#849fa7'}}>
+        <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+ <Card>
+     <CardContent>
      <Box
           sx={{
+            p: 12,
             height: '100%',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: 'background.paper',
-            padding : '8px'
+            backgroundColor: 'background.paper'
           }}
         >
           <BoxWrapper>
-            <Box sx={{ mb: 6}}>
+            <Box sx={{ mb: 6 }}>
               <TypographyStyled variant='h5'>Welcome to {themeConfig.templateName}! 👋🏻</TypographyStyled>
               <Typography variant='body2' sx={{fontWeight:'bold'}}>Please sign-in to your account and start the adventure</Typography>
             </Box>
@@ -433,15 +442,13 @@ const LoginV1 = () => {
                 {errors.password && <FormHelperText sx={{ color: 'error.main' }}>{errors.password}</FormHelperText>}
               </FormControl>
 
-
-              <FormControlStyled fullWidth>
-              <ReCAPTCHA sitekey={sitekey} value={values.google_captcha}
+              <FormControl fullWidth sx={{ mb: 4 }}>
+              <ReCAPTCHANew sitekey={sitekey} value={values.google_captcha}
               onChange={handleChangeFormData('google_captcha')}
               error={Boolean(errors.google_captcha)} />
               {errors.google_captcha && <FormHelperText sx={{ color: 'error.main' }}>{errors.google_captcha.message}</FormHelperText>}
               {errorList.google_captcha && <FormHelperText sx={{ color: 'error.main' }}>{errorList.google_captcha[0]}</FormHelperText>}
-              </FormControlStyled>
-
+              </FormControl>
 
               <Box
                 sx={{ mb: 4, display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}
@@ -488,12 +495,15 @@ const LoginV1 = () => {
             </form>
           </BoxWrapper>
         </Box>
+      </CardContent>
+    </Card>
+    </Box>
    </CardContent>
     </Card>
     </Grid>
     </Grid>
     <FooterIllustrationsV1 />
-    </>
+  </Box>
   )
 }
 
