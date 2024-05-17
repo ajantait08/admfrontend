@@ -266,22 +266,26 @@ const AuthProvider = ({ children }) => {
   const handleLoginUser = (params, errorCallback) => {
 
     axios
-      .post(url + 'login_user', params)
+      .post(url + 'user_login', params.datanew)
       .then(async response => {
-        // console.log(response.data.status)
-        // if (response.data.status === true) {
+        if (response.data.status === false) {
+          errorCallback({ 'msg' : response.data , 'status' : 3});
         //   const returnUrl = router.query.returnUrl
         //   const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
         //   router.replace(redirectURL)
-        // } else {
-
-        //   errorCallback(response.data.message)
-        // }
-
-
+        } else {
+          localStorage.setItem('userdata',response.data.userdata);
+          console.log(response.data.userdata);
+          //axios.post(url + '',)
+        }
       }).catch(err => {
         if (errorCallback) errorCallback(err)
       })
+  }
+
+  const handleUserDashboardData = (params, errorCallback) => {
+    axios
+    .post(url + 'user_dashboarddata',)
   }
 
   const values = {
@@ -296,14 +300,15 @@ const AuthProvider = ({ children }) => {
     setAdmnNoMsg,
     admnNoMsg,
     //verifyEmailMsg,
-    login: handleLogin,
+    loginUser: handleLoginUser,
     logout: handleLogout,
     register: handleRegister,
     checkAdmnNo: handleCheckAdmnNo,
     registerUser: handleRegisterUser,
     //verifyEmail: handleVerifyEmail,
     loginUser: handleLoginUser,
-    checkLoginAdmnNo : handleCheckLoginAdmnNo
+    checkLoginAdmnNo : handleCheckLoginAdmnNo,
+    getUserDashboardData : handleUserDashboardData
   }
 
   //console.log(values);

@@ -656,7 +656,6 @@ const AdmPhdReg = () => {
         }));
         });
         setIsButtonDisabled(true)
-
      }
      else if(response.msg.message === 'Email Already Exists' || response.msg.message === 'Mobile Already Exists'){
       setLoading(false)
@@ -806,7 +805,7 @@ const AdmPhdReg = () => {
     </Card>
         </Box>
 
-        {isDisplayError ? <Alert severity='error' sx={{margin: theme.spacing(10)}}>{isDisplayErrorMsg ? isDisplayErrorMsg : 'Sorry There is no appropriate message to display'}</Alert> : ''}
+        {isDisplayError ? <Alert severity='error' sx={{margin: theme.spacing(10)}}>{isDisplayErrorMsg ? isDisplayErrorMsg : 'Sorry Some Error occurred , please contact admin !'}</Alert> : ''}
         <form noValidate autoComplete='off' onSubmit={submitHandler}>
         <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
@@ -1094,9 +1093,9 @@ const AdmPhdReg = () => {
       </CardContent>
     </Card>
     </Box>
-</CardContent>
-    </Card>
-    </Grid>
+  </CardContent>
+      </Card>
+      </Grid>
       }
     </Grid>
     <FooterIllustrationsV1 />

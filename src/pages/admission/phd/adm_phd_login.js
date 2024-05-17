@@ -40,6 +40,8 @@ import 'react-notifications/lib/notifications.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import ReCAPTCHA from 'react-google-recaptcha'
 import Icon from 'src/@core/components/icon'
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 // ** Third Party Imports
 import * as yup from 'yup'
@@ -48,6 +50,7 @@ import {yupResolver} from '@hookform/resolvers/yup'
 
 // ** Hooks
 import { useAuth } from 'src/hooks/useAuth'
+import {useDashboardContext} from 'src/hooks/useDashboardContext'
 import useBgColor from 'src/@core/hooks/useBgColor'
 import { useSettings } from 'src/@core/hooks/useSettings'
 
@@ -177,9 +180,17 @@ const LoginV1 = () => {
   const [errorList, setErrorList] = useState([]);
   const [containerWidth , setContainerWidth] = useState('');
   const [captchaStyle , setCaptchaStyle] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [isDisplayError , setIsDisplayError] = useState(false);
+  const [isDisplayErrorMsg , setIsDisplayErrorMsg] = useState('');
+  const [showPassword, setShowPassword] = useState(false)
+  const [date, setDate] = useState(new Date())
+  const [studentName, setStudentName] = useState()
+  const [backdropOpen , setBackdropOpen] = useState(false);
 
   // ** Hooks
   const auth = useAuth()
+  const userDashboard = useDashboardContext()
   const theme = useTheme()
   const bgClasses = useBgColor()
   const { settings } = useSettings()
@@ -213,27 +224,27 @@ const LoginV1 = () => {
 }
 
     const [values, setValues] = useState({
-      salutation : '',
-      first_name : '',
-      middle_name : '',
+      registration_no : '',
+      password : '',
+      google_captcha : '',
+      showPassword : 'text'
 
     });
 
     const [errors , setErrors] = useState({
-      salutation : '',
-      first_name : '',
-      middle_name : '',
-
+      registration_no : '',
+      password : '',
+      google_captcha : ''
     });
 
-    const [showPassword, setShowPassword] = useState(false)
-    const [date, setDate] = useState(new Date())
-    const [studentName, setStudentName] = useState()
+
 
     const onhandleChangeName  = prop => event => {
       //   console.log(event.target.value)
       setStudentName({ ...values, [prop]: event.target.value })
   }
+  console.log('values here :');
+  console.log(values);
 
 
     // ** State
@@ -244,69 +255,51 @@ const LoginV1 = () => {
   const { i18n } = useTranslation()
 
     // ** Hooks
-  const sitekey = '6Lf8isYkAAAAAAElKsix4YfzNkQUXWkIBK0CZbfi'
+  const sitekey = '6LclBM8pAAAAADWnVP_qvTK6X_SpW9zKePWamBPW'
+
+  const isAlphanumeric = (str) => {
+    return /^[a-zA-Z0-9./]+$/.test(str);
+}
 
   const handleChangeFormData =  prop => (event) => {
     setValues({ ...values, [prop]: event.target.value })
-    if(prop === 'first_name'){
+    if(prop === 'registration_no'){
       if(event.target.value === ''){
-        setErrors({...errors , [prop] : 'First Name is Required'})
+        setErrors({...errors , [prop] : 'Registration No. is Required'})
         setIsButtonDisabled(true)
       }
       else if(!isAlphanumeric(event.target.value)){
-        setErrors({...errors , [prop] : 'First Name Should Only be Alphanumeric'})
+        setErrors({...errors , [prop] : 'Registration No. Should Only be Alphanumeric'})
         setIsButtonDisabled(true)
       }
       else {
         setErrors({...errors , [prop] : ''})
-        if(values.category != '' && values.salutation != '' && values.colorblindness != '' && values.mobile != '' && values.blood_group != '' && values.email != '' && values.pwd != '' && values.gender != ''){
-          if(errors.middle_name == '' && errors.salutation == '' && errors.last_name == '' && errors.category == '' && errors.colorblindness == '' && errors.mobile == '' && errors.father_name == '' && errors.blood_group == '' && errors.email == '' && errors.pwd == '' && errors.gender == ''){
+        if(values.password != ''){
+          if(errors.password == ''){
             console.log('No errors are Found')
             setIsButtonDisabled(false)
           }
         }
       }
     }
-    if(prop === 'middle_name'){
-      // if(event.target.value === ''){
-      //   setErrors({...errors , [prop] : 'Middle Name is Required'})
-      //   setIsButtonDisabled(true)
-      // }
-        if(!isAlphanumeric_middle_last(event.target.value)){
-          setErrors({...errors , [prop] : 'Middle Name Should Only be Alphanumeric'})
+    if(prop === 'password'){
+        if(event.target.value === ''){
+          setErrors({...errors , [prop] : 'Password is Required'})
+          setIsButtonDisabled(true)
+        }
+        if(!isAlphanumeric(event.target.value)){
+          setErrors({...errors , [prop] : 'Password Should Only be Alphanumeric'})
           setIsButtonDisabled(true)
         }
         else{
         setErrors({...errors , [prop] : ''})
-        if(values.first_name != '' && values.category != '' && values.salutation != '' && values.colorblindness != '' && values.mobile != '' && values.blood_group != '' && values.email != '' && values.pwd != '' && values.gender != ''){
-          if(errors.first_name == '' && errors.last_name == '' && errors.category == '' && errors.salutation == '' && errors.colorblindness == '' && errors.mobile == '' && errors.father_name == '' && errors.blood_group == '' && errors.email == '' && errors.pwd == '' && errors.gender == ''){
+        if(values.registration_no != ''){
+          if(errors.registration_no == ''){
             setIsButtonDisabled(false)
           }
         }
       }
     }
-  }
-
-  const onSubmit = (data,e) => {
-    e.preventDefault();
-    console.log(data);
-    const { admn_no , student_name_new, programme_name_new,  email , mobile_no, google_captcha} = data
-
-      const datanew = {
-        mobile_no : mobile_no,
-        email: email,
-        admn_no: admn_no,
-        student_name : student_name_new,
-        programme_name : programme_name_new,
-        google_captcha: google_captcha
-      }
-
-      auth.loginUser({datanew},(response) => {
-      if(response.status === 3)
-      {
-        setErrorList(response.msg.response.data.message);
-      }
-      });
   }
 
   useEffect(() => {
@@ -336,37 +329,85 @@ const LoginV1 = () => {
   }, [containerWidth]); // Listen for changes in the md breakpoint
 
 
-  const handleSubmit = (e) => {
-       e.preventDefault();
+  const handleSubmit = (event) => {
+
+    event.preventDefault();
+    setIsButtonDisabled(true)
+    setBackdropOpen(true);
+
+    var registration_no = values.registration_no;
+    var password = values.password;
+    var google_captcha = values.google_captcha;
+
+      var datanew = {
+        registration_no : registration_no,
+        password: password,
+        google_captcha: google_captcha
+      }
+
+      auth.loginUser({datanew},(response) => {
+      if(response.status === 3)
+      {
+        //setLoading(false);
+
+        if(response.msg.message === 'validation failed')
+          {
+             setBackdropOpen(false);
+             const errorFields = Object.keys(response.msg.error);
+             errorFields.map(fieldName => {
+             console.log(response.msg.error[fieldName])
+             const fieldErrors = response.msg.error[fieldName];
+             setErrors(errors => ({
+               ...errors,
+               [fieldName]: (
+                 <>
+                 {fieldErrors.map((error, index) => (
+                   <Fragment key={index}>
+                     {index > 0 && <br />}
+                     {error}
+                   </Fragment>
+                 ))}
+               </>
+               )
+             }));
+             });
+             setIsButtonDisabled(true)
+          }
+          else if(response.msg.message === 'Registration Details Not Found' || response.msg.message === 'Email Not Verified' || response.msg.message === 'Invalid login credentials' || response.msg.message === 'login failed'){
+            //setLoading(false);
+            setBackdropOpen(false);
+            setIsDisplayError(true);
+            setIsDisplayErrorMsg(response.msg.error);
+            setValues({
+              registration_no : '',
+              password : ''
+            });
+            setIsButtonDisabled(true);
+          }
+          else{
+
+          }
+      }
+      else{
+        //userDashboard.
+      }
+      });
     }
 
-  const onClick = data => {
-
-    auth.checkLoginAdmnNo({ data }, (response) => {
-
-      // console.log(auth.admnNoMsg.data.data.date_of_birth);
-       if(response.status === 1)
-       {
-        console.log('initial_msg'+response.msg);
-        setToggleResult(response.msg);
-        setValue('isStudentName',true,{shouldDirty:true});
-        setValue('isProgrammeName',true,{shouldDirty:true});
-        setErrorList([])
-       }
-       else if(response.status === 2)
-       {
-        setToggleResult(response.msg);
-        setErrorList([])
-       }
-       else{
-        setErrorList(response.msg.response.data.message);
-        setToggleResult(null);
-       }
-    })
-  }
   return (
 
     <>
+
+     <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={backdropOpen}
+      >
+        <Typography variant='h5' sx={{ color: 'wheat' , fontWeight: 800 , textAlign:'center'}}>&nbsp;&nbsp;
+        <CircularProgress sx={{ color: 'wheat'}}
+        />
+        <br />
+        Please wait while processing Login Details...</Typography>
+      </Backdrop>
 
     <Grid container spacing={4} >
   <Grid item xs={12} md={4} sx={{ alignSelf: 'flex-start' }}>
@@ -389,24 +430,25 @@ const LoginV1 = () => {
               <TypographyStyled variant='h5'>Welcome to {themeConfig.templateName}! 👋🏻</TypographyStyled>
               <Typography variant='body2' sx={{fontWeight:'bold'}}>Please sign-in to your account and start the adventure</Typography>
             </Box>
+            {isDisplayError ? <Alert severity='error' sx={{margin: theme.spacing(10)}}>{isDisplayErrorMsg ? isDisplayErrorMsg : 'Sorry Some Error occurred , please contact admin !'}</Alert> : ''}
             <form noValidate autoComplete='off' onSubmit={handleSubmit}>
             <FormControl fullWidth sx={{ mb: 4 }}>
               <TextField
                 fullWidth
-                label=<Typography>Email<span style={{ color : 'red'}}>*</span></Typography>
-                name='email'
-                placeholder='Enter Email'
-                value={values.email}
-                onChange={handleChangeFormData('email')}
+                label=<Typography>Registration No.<span style={{ color : 'red'}}>*</span></Typography>
+                name='registration_no'
+                placeholder='Enter Registration No.'
+                value={values.registration_no}
+                onChange={handleChangeFormData('registration_no')}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position='start'>
-                      <Icon icon='mdi:email-edit' style={{ width: '20px', height: '20px' }} />
+                      <Icon icon='mdi:account-outline' style={{ width: '20px', height: '20px' }} />
                     </InputAdornment>
                   )
                 }}
               />
-                {errors.email && <FormHelperText sx={{ color: 'error.main' }}>{errors.email}</FormHelperText>}
+                {errors.registration_no && <FormHelperText sx={{ color: 'error.main' }}>{errors.registration_no}</FormHelperText>}
                 {/* {errorList.last_name && <FormHelperText sx={{ color: 'error.main' }}>{errorList.last_name[0]}</FormHelperText>} */}
               </FormControl>
               <FormControl fullWidth sx={{ mb: 4 }}>
@@ -415,7 +457,7 @@ const LoginV1 = () => {
                   label='Password'
                   value={values.password}
                   id='auth-login-v2-password'
-                  onChange={handleChange('password')}
+                  onChange={handleChangeFormData('password')}
                   type={values.showPassword ? 'text' : 'password'}
                   endAdornment={
                     <InputAdornment position='end'>
@@ -480,7 +522,7 @@ const LoginV1 = () => {
                           </IconButton>
                 </Typography>
                 <Typography variant='body2' sx={{fontWeight:'bold'}}>
-                  <Link passHref href='/pages/auth/register-v2'>
+                  <Link passHref href='/admission/phd/adm_phd_registration'>
                     <LinkStyled>Sign Up</LinkStyled>
                   </Link>
                 </Typography>
