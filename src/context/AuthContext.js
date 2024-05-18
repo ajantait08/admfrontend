@@ -20,10 +20,11 @@ import MuiAlert from '@mui/material/Alert';
 import swal from 'sweetalert';
 //import { useEmailVerify } from 'src/hooks/useEmailVerify';
 
-// axios.defaults.baseURL = 'http://localhost:8000/';
-// axios.defaults.headers.post['Content-Type'] = 'application/json';
-// axios.defaults.headers.post['Accept'] = 'application/json';
-//axios.defaults.withCredentials = true;
+axios.defaults.baseURL = 'http://localhost:8000/';
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+axios.defaults.headers.post['Accept'] = 'application/json';
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+axios.defaults.withCredentials = true;
 
 
 // ** Defaults
@@ -268,14 +269,36 @@ const AuthProvider = ({ children }) => {
     axios
       .post(url + 'user_login', params.datanew)
       .then(async response => {
+        console.log('reached here !!')
+        console.log(response)
         if (response.data.status === false) {
           errorCallback({ 'msg' : response.data , 'status' : 3});
         //   const returnUrl = router.query.returnUrl
         //   const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
         //   router.replace(redirectURL)
         } else {
-          localStorage.setItem('userdata',response.data.userdata);
-          console.log(response.data.userdata);
+          var userdata = response.data.userdata;
+          var email = userdata.email;
+          var token = userdata.token;
+          var registration_no = userdata.registration_no;
+          var userdatalocalStorage = email+'/'+token+'/'+registration_no;
+          localStorage.setItem('userdata',userdatalocalStorage);
+          var userdatalocalStorage = localStorage.getItem('userdata');
+          var datanew = {
+            email : email,
+            token : token,
+            registration_no : registration_no
+          }
+          axios.post(url + 'getAppHomeDetails',datanew,{
+             headers : {
+              Authorization: 'Bearer ' + token
+             }
+          })
+          .then(async response => {
+             console.log(response)
+          })
+          .catch()
+
           //axios.post(url + '',)
         }
       }).catch(err => {

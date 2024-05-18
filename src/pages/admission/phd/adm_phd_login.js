@@ -50,7 +50,7 @@ import {yupResolver} from '@hookform/resolvers/yup'
 
 // ** Hooks
 import { useAuth } from 'src/hooks/useAuth'
-import {useDashboardContext} from 'src/hooks/useDashboardContext'
+import {useUserDashboard} from 'src/hooks/useUserDashboard'
 import useBgColor from 'src/@core/hooks/useBgColor'
 import { useSettings } from 'src/@core/hooks/useSettings'
 
@@ -190,7 +190,7 @@ const LoginV1 = () => {
 
   // ** Hooks
   const auth = useAuth()
-  const userDashboard = useDashboardContext()
+  const userDashboard = useUserDashboard()
   const theme = useTheme()
   const bgClasses = useBgColor()
   const { settings } = useSettings()
