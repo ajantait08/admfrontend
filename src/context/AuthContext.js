@@ -281,15 +281,14 @@ const AuthProvider = ({ children }) => {
           var email = userdata.email;
           var token = userdata.token;
           var registration_no = userdata.registration_no;
-          var userdatalocalStorage = email+'/'+token+'/'+registration_no;
-          localStorage.setItem('userdata',userdatalocalStorage);
-          var userdatalocalStorage = localStorage.getItem('userdata');
-          var datanew = {
+          var datanewAfterLogin = {
             email : email,
             token : token,
             registration_no : registration_no
           }
-          axios.post(url + 'getAppHomeDetails',datanew,{
+          localStorage.setItem('userdata',datanewAfterLogin);
+          //var userdatalocalStorage = localStorage.getItem('userdata');
+          axios.post(url + 'getAppHomeDetails',datanewAfterLogin,{
              headers : {
               Authorization: 'Bearer ' + token
              }
@@ -297,7 +296,9 @@ const AuthProvider = ({ children }) => {
           .then(async response => {
              console.log(response)
           })
-          .catch()
+          .catch(
+
+          )
 
           //axios.post(url + '',)
         }
